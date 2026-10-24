@@ -5,7 +5,7 @@ import trcs.autorent.model.User;
 
 @Remote
 public interface IAuth {
-	boolean login(String cpf, String password);
+	boolean login(String email, String password);
 	void logout();
 	User getLoggedUser();
 }

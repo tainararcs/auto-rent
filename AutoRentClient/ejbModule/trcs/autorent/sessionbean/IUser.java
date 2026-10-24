@@ -7,6 +7,6 @@ import trcs.autorent.enums.UserType;
 import trcs.autorent.model.User;
 
 @Remote
-public interface IUser extends Crud<User> {
+public interface IUser extends Crud<User>, IAuth {
     List<User> getByType(UserType type);
 }

@@ -116,7 +116,7 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-	      return String.format("%d. %s | CPF: %s | E-mail: %s | Tipo: %s", id, name, cpf, email, type.getType());
+	      return String.format("%d. %s - CPF: %s | E-mail: %s | Tipo: %s", id, name, cpf, email, type.getType());
 	  }
 	
 }
