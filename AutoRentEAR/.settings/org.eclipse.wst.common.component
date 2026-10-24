@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+        
+    <wb-module deploy-name="AutoRentEAR">
+                
+        <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
+                
+        <dependent-module archiveName="AutoRent.jar" deploy-path="/" handle="module:/resource/AutoRent/AutoRent">
+                        
+            <dependency-type>uses</dependency-type>
+                    
+        </dependent-module>
+                
+        <dependent-module archiveName="AutoRentClient.jar" deploy-path="/" handle="module:/resource/AutoRentClient/AutoRentClient">
+                        
+            <dependency-type>uses</dependency-type>
+                    
+        </dependent-module>
+        <dependent-module archiveName="AutoRentWeb.war" deploy-path="/" handle="module:/resource/AutoRentWeb/AutoRentWeb">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+            
+    </wb-module>
+    
+</project-modules>
