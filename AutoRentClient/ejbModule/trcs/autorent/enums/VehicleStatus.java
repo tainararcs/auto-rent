@@ -16,4 +16,13 @@ public enum VehicleStatus {
 		return status;
 	}
 
+	public static String[] valuesString() {
+		String[] valuesArray = new String[values().length];
+		
+		short index = 0;
+		for (VehicleStatus status : values()) 
+			valuesArray[index++] = status.getStatus();
+		
+		return valuesArray;
+	}
 }

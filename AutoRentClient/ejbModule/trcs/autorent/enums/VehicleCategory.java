@@ -14,5 +14,14 @@ public enum VehicleCategory {
 	public String getCategory() {
 		return category;
 	}
-
+	
+	public static String[] valuesString() {
+		String[] valuesArray = new String[values().length];
+		
+		short index = 0;
+		for (VehicleCategory category : values()) 
+			valuesArray[index++] = category.getCategory();
+		
+		return valuesArray;
+	}
 }
