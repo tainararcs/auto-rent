@@ -54,7 +54,8 @@ public class Vehicle implements Serializable {
 	@Column(nullable = false, precision = 10)
 	private Double dailyRate;
 	
-	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 20)
 	private VehicleStatus status; 
 	
 	@ManyToOne(fetch = FetchType.LAZY)

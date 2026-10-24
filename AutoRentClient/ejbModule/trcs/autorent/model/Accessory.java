@@ -73,7 +73,7 @@ public class Accessory implements Serializable {
 
 	@Override
 	public String toString() {
-		return String.format("%d. %s | Diária: R$ %1.2f", id, description, dailyRate);
+		return String.format("%d. %s - Diária: R$ %1.2f", id, description, dailyRate);
 	}
     
 }
