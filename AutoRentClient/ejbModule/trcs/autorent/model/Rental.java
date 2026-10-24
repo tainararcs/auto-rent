@@ -166,9 +166,13 @@ public class Rental implements Serializable {
 
 	@Override
 	public String toString() {
-		return String.format("%d - %s - %s - %s - %s - %s - %s - %s - %s - R$ %1.2f",
-				id, client, vehicle.getModel(), pickupAgency.getName(), returnAgency.getName(), 
-				pickupDate, dueDate, returnDate, status.getStatus(), totalValue
+		String returnDateStr = (returnDate != null) ? returnDate.toString() : "Pendente";
+		String vehicleInfo = (vehicle != null) ? String.format("%s (%s)", vehicle.getModel(), vehicle.getPlate()) : "N/A";
+		String clientName = (client != null) ? client.getName() : "N/A";
+		String agencyName = (pickupAgency != null) ? pickupAgency.getName() : "N/A";
+
+		return String.format("%d. Cliente: %s | Veículo: %s | Agência: %s | Período: %s a %s (Devolução: %s) | Status: %s | Total: R$ %1.2f",
+				id, clientName, vehicleInfo, agencyName, pickupDate, dueDate, returnDateStr, status, totalValue
 		);
 	}
 	

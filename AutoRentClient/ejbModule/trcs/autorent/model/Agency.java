@@ -98,7 +98,7 @@ public class Agency implements Serializable {
 
 	@Override
 	public String toString() {
-		return String.format("%d - %s - %s - %s - %s", id, name, address, city, phoneNumber);
-	}
+	      return String.format("%d. %s - %s (%s) | Tel: %s", id, name, address, city, phoneNumber);
+	  }
 	
 }
