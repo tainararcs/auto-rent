@@ -7,6 +7,7 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import trcs.autorent.enums.VehicleCategory;
 import trcs.autorent.enums.VehicleStatus;
 import trcs.autorent.model.Agency;
 import trcs.autorent.model.Vehicle;
@@ -40,11 +41,6 @@ public class VehicleSB implements IVehicle {
 		return true;
 	}
 
-//	@Override
-//	public Vehicle findById(Long id) {
-//		return em.find(Vehicle.class, id);
-//	}
-
 	@Override
 	public Vehicle findById(Long id) {
 	    Vehicle vehicle = em.find(Vehicle.class, id);
@@ -58,24 +54,29 @@ public class VehicleSB implements IVehicle {
 	
 	@Override
 	public List<Vehicle> listAll() {
-		TypedQuery<Vehicle> query = em.createQuery("SELECT v FROM Vehicle v", Vehicle.class);
-		return query.getResultList();
+		TypedQuery<Vehicle> query = em.createQuery("SELECT v FROM Vehicle v JOIN FETCH v.agency", Vehicle.class);
+		List<Vehicle> vehicles = query.getResultList();
+		if (vehicles != null) {
+			for (Vehicle v : vehicles) {
+				v.setAccessoriesList(null);
+			}
+		}
+		return vehicles;
 	}
 
 	@Override
 	public List<Vehicle> getByStatus(VehicleStatus status) {
-		TypedQuery<Vehicle> query = em.createQuery("SELECT v FROM Vehicle v WHERE status = :status", Vehicle.class);
+		TypedQuery<Vehicle> query = em.createQuery("SELECT v FROM Vehicle v JOIN FETCH v.agency WHERE v.status = :status", Vehicle.class);
 		query.setParameter("status", status);
-		return query.getResultList();
+		List<Vehicle> vehicles = query.getResultList();
+		if (vehicles != null) {
+			for (Vehicle v : vehicles) {
+				v.setAccessoriesList(null);
+			}
+		}
+		return vehicles;
 	}
 
-//	@Override
-//	public List<Vehicle> getByAgency(Agency agency) {
-//		TypedQuery<Vehicle> query = em.createQuery("SELECT v FROM Vehicle v WHERE agency = :agency", Vehicle.class);
-//		query.setParameter("agency", agency);
-//		return query.getResultList();
-//	}
-	
 	@Override
 	public List<Vehicle> getByAgency(Agency agency) {
 	    TypedQuery<Vehicle> query = em.createQuery("SELECT v FROM Vehicle v WHERE v.agency = :agency", Vehicle.class);
@@ -83,12 +84,12 @@ public class VehicleSB implements IVehicle {
 	    
 	    List<Vehicle> vehicles = query.getResultList();
 	    
-	    // Limpa as coleções para evitar o erro de PersistentBag no cliente Java SE remoto
+	    // Limpa as coleções para evitar o erro de PersistentBag no cliente Java SE remoto.
 	    if (vehicles != null) {
 	        for (Vehicle v : vehicles) {
-	            v.setAccessoriesList(null); 			 // Limpa acessórios do veículo
+	            v.setAccessoriesList(null); 			 // Limpa acessórios do veículo.
 	            if (v.getAgency() != null) 
-	                v.getAgency().setVehiclesList(null); // Limpa a lista de veículos da agência
+	                v.getAgency().setVehiclesList(null); // Limpa a lista de veículos da agência.
 	        }
 	    }
 	    
@@ -96,10 +97,16 @@ public class VehicleSB implements IVehicle {
 	}
 
 	@Override
-	public List<Vehicle> getByCategory(String category) {
-		TypedQuery<Vehicle> query = em.createQuery("SELECT v FROM Vehicle v WHERE category = :category", Vehicle.class);
+	public List<Vehicle> getByCategory(VehicleCategory category) { // Alterado para receber o Enum caso necessário, ou mantenha String
+		TypedQuery<Vehicle> query = em.createQuery("SELECT v FROM Vehicle v JOIN FETCH v.agency WHERE v.category = :category", Vehicle.class);
 		query.setParameter("category", category);
-		return query.getResultList();
+		List<Vehicle> vehicles = query.getResultList();
+		if (vehicles != null) {
+			for (Vehicle v : vehicles) {
+				v.setAccessoriesList(null);
+			}
+		}
+		return vehicles;
 	}
 	
 	/**
