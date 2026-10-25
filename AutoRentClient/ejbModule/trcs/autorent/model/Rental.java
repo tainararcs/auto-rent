@@ -172,7 +172,7 @@ public class Rental implements Serializable {
 		String agencyName = (pickupAgency != null) ? pickupAgency.getName() : "N/A";
 
 		return String.format("%d. Cliente: %s | Veículo: %s | Agência: %s | Período: %s a %s (Devolução: %s) | Status: %s | Total: R$ %1.2f",
-				id, clientName, vehicleInfo, agencyName, pickupDate, dueDate, returnDateStr, status, totalValue
+				id, clientName, vehicleInfo, agencyName, pickupDate, dueDate, returnDateStr, status.getStatus(), totalValue
 		);
 	}
 	

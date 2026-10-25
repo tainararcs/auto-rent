@@ -164,7 +164,7 @@ public class Vehicle implements Serializable {
 	@Override
 	public String toString() {
 		return String.format("%d. Placa: %s | %s %s (%d) | Cat: %s | Diária: R$ %1.2f | Status: %s | Agência: %s",
-				id, plate, brand, model, year, category, dailyRate, status, (agency != null ? agency.getName() : "N/A")
+				id, plate, brand, model, year, category.getCategory(), dailyRate, status.getStatus(), (agency != null ? agency.getName() : "N/A")
 		);
 	}
 	
