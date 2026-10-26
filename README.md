@@ -13,22 +13,35 @@ Auto Rent é um sistema de gestão de frotas e locação de veículos desenvolvi
 
 ## Como rodar localmente
 
-1. **Banco de dados**
-   ```bash
-   # Crie o banco de dados e usuário
-   createdb autorent
-   psql -d autorent -f db/scripts/create-schema.sql
-   psql -d autorent -f db/scripts/seed-data.sql
-   ```
-   > Os scripts `create-schema.sql` e `seed-data.sql` estão na pasta `db/scripts/`.
+1. **Clonar o repositório**
+   `git clone `
 
-2. **Configurar o datasource**
+2. Crie e inicie o servidor
+   - Baixe o Widfly
+   - Adicione o AutoRentEAR ao servidor
+   - Inicie-o
+
+3. **Banco de dados**
+   - Crie o banco de dados e usuário
+   ```bash
+   createdb autorent
+   psql -d autorent -f db/scripts/autorent_dump.sql
+   ```
+
+4. **Configurar o datasource**
    - Em `http://localhost:9900` (interface gráfica de configuração do WildFly), crie o datasource PostgreDS e configure a conexão com o DB.
 
-4. **Compilar e empacotar**
+5. **Executar o projeto**
+   - Clone o repositório `git clone `
    - Inicie o servidor (ou reinicie caso já esteja em execução).
    - Acesse: `http://localhost:8080/AutoRentWeb`.
 
+6. Execute a aplicação o client Java SE:
+   ```bash
+   CTRL + F11
+   ```
+   O cliente abrirá um console que permite autenticar usando as credenciais acima e executar operações de CRUD via JPA.
+   
 ## Credenciais padrão para testes
 
 | Usuário | Senha | Papel |
@@ -37,13 +50,6 @@ Auto Rent é um sistema de gestão de frotas e locação de veículos desenvolvi
 | `ana` | `2222` | Usuário comum (visualização limitada) |
 | `ben` | `3333` | Usuário comum (visualização limitada) |
 
-## Como rodar o client Java SE
-
-1. Execute a aplicação cliente:
-   ```bash
-   mvn exec:java -Dexec.mainClass="br.com.tainararcs.autorent.client.Main"
-   ```
-   O cliente abrirá um console que permite autenticar usando as credenciais acima e executar operações de CRUD via JPA.
 
 ## Lista de JPQL implementadas e como testá‑las
 
