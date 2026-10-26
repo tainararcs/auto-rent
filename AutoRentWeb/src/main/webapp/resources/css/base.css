@@ -1,0 +1,516 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css');
+
+/* ==========================================================================
+   AUTORENT DESIGN SYSTEM - BASE TOKENS & FOUNDATIONS
+   Identidade Corporativa e Moderna para Gestão Inteligente de Frotas
+   ========================================================================== */
+
+:root {
+    /* Paleta Principal: Tons Corporativos & Setor Automotivo */
+    --navy-950: #0B1120;
+    --navy-900: #0F172A;
+    --navy-850: #162032;
+    --navy-800: #1E293B;
+    --navy-700: #334155;
+    
+    /* Azul Royal Vibrante e Destaques */
+    --primary: #2563EB;
+    --primary-hover: #1D4ED8;
+    --primary-dark: #1E40AF;
+    --primary-light: #3B82F6;
+    --primary-soft: #EFF6FF;
+    --primary-subtle: rgba(37, 99, 235, 0.12);
+    --primary-gradient: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+    --accent-cyan: #0284C7;
+    --accent-sky: #38BDF8;
+
+    /* Neutros & Superfícies (Cinza Gelo Super Limpo) */
+    --bg-body: #F8FAFC;
+    --bg-card: #FFFFFF;
+    --bg-muted: #F1F5F9;
+    --bg-subtle: #F8FAFC;
+    --border-color: #E2E8F0;
+    --border-dark: #CBD5E1;
+    --border-focus: #2563EB;
+
+    /* Tipografia & Contrastes */
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #64748B;
+    --text-light: #94A3B8;
+    --text-white: #FFFFFF;
+
+    /* Indicadores de Status da Frota */
+    --status-available-text: #047857;
+    --status-available-bg: #ECFDF5;
+    --status-available-border: #A7F3D0;
+    --status-available-dot: #10B981;
+
+    --status-rented-text: #4338CA;
+    --status-rented-bg: #EEF2FF;
+    --status-rented-border: #C7D2FE;
+    --status-rented-dot: #6366F1;
+
+    --status-reserved-text: #B45309;
+    --status-reserved-bg: #FFFBEB;
+    --status-reserved-border: #FDE68A;
+    --status-reserved-dot: #F59E0B;
+
+    --status-maintenance-text: #BE123C;
+    --status-maintenance-bg: #FFF1F2;
+    --status-maintenance-border: #FECDD3;
+    --status-maintenance-dot: #F43F5E;
+
+    /* Sombras Elevadas & Delicadas */
+    --shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+    --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.08), 0 1px 2px -1px rgba(15, 23, 42, 0.08);
+    --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+    --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
+    --shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.09), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+
+    /* Raios de Borda */
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-full: 9999px;
+
+    /* Transições Suaves */
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Dimensões do Layout */
+    --sidebar-width: 270px;
+    --topbar-height: 70px;
+}
+
+/* ==========================================================================
+   CSS RESET & BASE
+   ========================================================================== */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-body);
+    color: var(--text-primary);
+    line-height: 1.5;
+    min-height: 100vh;
+}
+
+/* ==========================================================================
+   TIPOGRAFIA
+   ========================================================================== */
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+}
+
+h1 { font-size: 1.875rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; }
+h4 { font-size: 1.125rem; }
+h5 { font-size: 1rem; }
+h6 { font-size: 0.875rem; }
+
+p {
+    color: var(--text-secondary);
+    font-size: 0.9375rem;
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a:hover {
+    color: var(--primary-hover);
+}
+
+/* ==========================================================================
+   BOTÕES MODERNOS
+   ========================================================================== */
+
+.btn,
+input[type="submit"],
+button[type="submit"],
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.625rem 1.25rem;
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    cursor: pointer;
+    background: var(--primary);
+    color: var(--text-white);
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+    text-decoration: none;
+    line-height: 1.25;
+}
+
+.btn:hover,
+input[type="submit"]:hover,
+button[type="submit"]:hover,
+.btn-primary:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+    color: var(--text-white);
+}
+
+.btn:active,
+input[type="submit"]:active,
+button[type="submit"]:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-xs);
+}
+
+.btn-secondary {
+    background-color: var(--bg-card);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-xs);
+}
+
+.btn-secondary:hover {
+    background-color: var(--bg-muted);
+    color: var(--text-primary);
+    border-color: var(--border-dark);
+}
+
+.btn-refresh {
+    background-color: var(--bg-card);
+    color: var(--primary);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 1rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-xs);
+}
+
+.btn-refresh:hover {
+    background-color: var(--primary-soft);
+    border-color: var(--primary-light);
+    color: var(--primary-hover);
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.btn-lg {
+    padding: 0.875rem 1.75rem;
+    font-size: 1rem;
+}
+
+/* ==========================================================================
+   CAMPOS DE FORMULÁRIO MODERNOS
+   ========================================================================== */
+
+.form-group {
+    margin-bottom: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+}
+
+label,
+.form-label {
+    display: inline-block;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--navy-800);
+    letter-spacing: 0.01em;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+select,
+textarea,
+.form-control {
+    width: 100%;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 0.625rem 0.875rem;
+    transition: all var(--transition-fast);
+    outline: none;
+    box-shadow: var(--shadow-xs);
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+select:focus,
+textarea:focus,
+.form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-subtle);
+    background-color: #FFFFFF;
+}
+
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748B'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem 1rem;
+    padding-right: 2.25rem;
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   CARDS & CONTAINERS
+   ========================================================================== */
+
+.card,
+.content-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-normal);
+}
+
+.content-card {
+    padding: 1.75rem;
+}
+
+/* ==========================================================================
+   TABELAS MODERNAS (<h:dataTable>)
+   ========================================================================== */
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+
+table,
+.data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    text-align: left;
+    font-size: 0.875rem;
+}
+
+/* Remove a borda antiga padrão border="1" do JSF */
+table[border="1"] {
+    border: none !important;
+}
+
+table thead th,
+.data-table th,
+th {
+    background-color: var(--bg-muted);
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.875rem 1.25rem;
+    border-bottom: 1px solid var(--border-color);
+    white-space: nowrap;
+}
+
+table tbody td,
+.data-table td,
+td {
+    padding: 1rem 1.25rem;
+    color: var(--navy-800);
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+    transition: background-color var(--transition-fast);
+}
+
+table tbody tr:last-child td,
+.data-table tr:last-child td {
+    border-bottom: none;
+}
+
+table tbody tr:hover td,
+.data-table tr:hover td {
+    background-color: #F8FAFC;
+}
+
+/* Emblema da Placa Automotiva */
+.plate-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    background-color: var(--navy-800);
+    color: var(--text-white);
+    padding: 0.25rem 0.625rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--navy-700);
+    box-shadow: var(--shadow-xs);
+}
+
+/* Badges de Status da Frota */
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: 0.02em;
+}
+
+.status-pill::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+.status-available,
+.status-Disponível,
+.status-DISPONIVEL {
+    background-color: var(--status-available-bg);
+    color: var(--status-available-text);
+    border: 1px solid var(--status-available-border);
+}
+.status-available::before,
+.status-Disponível::before,
+.status-DISPONIVEL::before {
+    background-color: var(--status-available-dot);
+}
+
+.status-rented,
+.status-Alugado,
+.status-ALUGADO {
+    background-color: var(--status-rented-bg);
+    color: var(--status-rented-text);
+    border: 1px solid var(--status-rented-border);
+}
+.status-rented::before,
+.status-Alugado::before,
+.status-ALUGADO::before {
+    background-color: var(--status-rented-dot);
+}
+
+.status-reserved,
+.status-Reservado,
+.status-RESERVADO {
+    background-color: var(--status-reserved-bg);
+    color: var(--status-reserved-text);
+    border: 1px solid var(--status-reserved-border);
+}
+.status-reserved::before,
+.status-Reservado::before,
+.status-RESERVADO::before {
+    background-color: var(--status-reserved-dot);
+}
+
+.status-maintenance,
+.status-Manutenção,
+.status-MANUTENCAO {
+    background-color: var(--status-maintenance-bg);
+    color: var(--status-maintenance-text);
+    border: 1px solid var(--status-maintenance-border);
+}
+.status-maintenance::before,
+.status-Manutenção::before,
+.status-MANUTENCAO::before {
+    background-color: var(--status-maintenance-dot);
+}
+
+/* ==========================================================================
+   FEEDBACK & MENSAGENS (<h:messages>)
+   ========================================================================== */
+
+ul[id*="messages"],
+.messages {
+    list-style: none;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    border-radius: var(--radius-md);
+    background-color: #FEF2F2;
+    border: 1px solid #FECACA;
+    color: #991B1B;
+    font-size: 0.875rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+ul[id*="messages"] li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+ul[id*="messages"] li::before {
+    content: "\F33A"; /* bi-exclamation-circle-fill */
+    font-family: "bootstrap-icons";
+    font-size: 1rem;
+    color: #DC2626;
+}
+
+/* ==========================================================================
+   CABEÇALHOS DE PÁGINA INTERNA
+   ========================================================================== */
+
+.page-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+}
+
+.page-title-group h1 {
+    font-size: 1.625rem;
+    color: var(--navy-900);
+    margin-bottom: 0.25rem;
+}
+
+.page-title-group p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}

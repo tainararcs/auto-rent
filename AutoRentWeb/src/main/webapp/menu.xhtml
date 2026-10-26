@@ -1,20 +1,86 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	</head>
-	<body>
-		<div>
-			<h:link outcome="dashboard" value="Home" /> 
-			<h:link outcome="createrental" value="Realizar Locação" /> 
-			<h:link outcome="listagency" value="Listar Agências" />
-			<h:link outcome="listaccessory" value="Listar Acessórios" /> 
-			<h:link outcome="listvehicle" value="Listar Veículos" /> 
-			<h:link outcome="listrental" value="Listar Reservas" /> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+
+	<!-- Barra Lateral de Navegação (Sidebar) -->
+	<aside class="app-sidebar" id="appSidebar">
+		
+		<!-- Logotipo e Identidade da Marca -->
+		<h:link outcome="dashboard" styleClass="sidebar-brand">
+			<div class="brand-icon">
+				<i class="bi bi-car-front-fill"></i>
+			</div>
+			<div class="brand-info">
+				<span class="brand-title">Auto<span>Rent</span></span>
+				<span class="brand-subtitle">Fleet Management</span>
+			</div>
+		</h:link>
+
+		<!-- Links de Navegação -->
+		<nav class="sidebar-nav">
+			<span class="nav-section-title">Menu Principal</span>
+			
+			<h:link outcome="dashboard" styleClass="nav-link #{view.viewId.contains('dashboard') ? 'active' : ''}">
+				<i class="bi bi-speedometer2"></i>
+				<span>Home</span>
+			</h:link>
+			
+			<h:link outcome="createrental" styleClass="nav-link #{view.viewId.contains('createrental') ? 'active' : ''}">
+				<i class="bi bi-plus-circle-fill"></i>
+				<span>Realizar Locação</span>
+			</h:link>
+
+			<span class="nav-section-title">Gestão da Frota</span>
+
+			<h:link outcome="listvehicle" styleClass="nav-link #{view.viewId.contains('listvehicle') ? 'active' : ''}">
+				<i class="bi bi-car-front"></i>
+				<span>Listar Veículos</span>
+			</h:link>
+			
+			<h:link outcome="listrental" styleClass="nav-link #{view.viewId.contains('listrental') ? 'active' : ''}">
+				<i class="bi bi-journal-bookmark-fill"></i>
+				<span>Listar Reservas</span>
+			</h:link>
+
+			<h:link outcome="listagency" styleClass="nav-link #{view.viewId.contains('listagency') ? 'active' : ''}">
+				<i class="bi bi-buildings"></i>
+				<span>Listar Agências</span>
+			</h:link>
+			
+			<h:link outcome="listaccessory" styleClass="nav-link #{view.viewId.contains('listaccessory') ? 'active' : ''}">
+				<i class="bi bi-tools"></i>
+				<span>Listar Acessórios</span>
+			</h:link>
+		</nav>
+
+		<!-- Rodapé da Sidebar: Perfil do Usuário e Logout -->
+		<div class="sidebar-footer">
+			<div class="sidebar-user">
+				<div class="user-avatar">
+				    <h:outputText value="#{userMB.loggedUser != null and not empty userMB.loggedUser.name ? fn:toUpperCase(fn:substring(userMB.loggedUser.name, 0, 1)) : 'U'}" />
+				</div>
+				<div class="user-meta">
+					<span class="user-meta-name" title="#{userMB.loggedUser != null ? userMB.loggedUser.name : 'Usuário'}">
+						<h:outputText value="#{userMB.loggedUser != null ? userMB.loggedUser.name : 'Usuário'}" />
+					</span>
+					<span class="user-meta-role">
+						<h:outputText value="#{userMB.loggedUser != null ? userMB.loggedUser.type.type : 'Sessão Ativa'}" />
+					</span>
+				</div>
+			</div>
+
+			<h:form id="sidebarLogoutForm" styleClass="logout-form">
+				<h:commandLink action="#{userMB.logout}" styleClass="logout-button" id="btnSidebarLogout">
+					<i class="bi bi-box-arrow-right"></i>
+					<span>Logout</span>
+				</h:commandLink>
+			</h:form>
 		</div>
-		<span>Logout</span>
-	</body>
-</html>
+
+	</aside>
+
+</ui:composition>

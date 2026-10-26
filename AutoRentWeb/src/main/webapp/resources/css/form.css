@@ -1,0 +1,312 @@
+@charset "UTF-8";
+
+/* Formulários Corporativos, Telas de Locação & Filtros */
+
+/* Card de Formulário Principal (ex: createrental.xhtml) */
+.form-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    max-width: 900px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.form-card-header {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--bg-subtle);
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+}
+
+.form-card-header-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    background-color: var(--primary-soft);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.form-card-header-text h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--navy-900);
+}
+
+.form-card-header-text p {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    margin-top: 0.125rem;
+}
+
+.form-card-body {
+    padding: 2.25rem 2rem;
+}
+
+/* ==========================================================================
+   LAYOUT MODERNO DE FORMULÁRIO DE LOCAÇÃO (GRID & FLEXBOX)
+   Substitui a fragilidade do h:panelGrid por alinhamento estruturado
+   ========================================================================== */
+
+.rental-form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-row.two-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--navy-800);
+    letter-spacing: 0.01em;
+}
+
+.form-control,
+select.form-control {
+    width: 100%;
+    max-width: 100%;
+    height: 46px;
+    font-size: 0.9375rem;
+    padding: 0.625rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-card);
+    color: var(--navy-900);
+    box-shadow: var(--shadow-xs);
+    transition: all var(--transition-fast);
+}
+
+.form-control:focus,
+select.form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-subtle);
+    outline: none;
+    background-color: #FFFFFF;
+}
+
+/* ==========================================================================
+   ACESSÓRIOS OPCIONAIS (<h:selectManyCheckbox>)
+   ========================================================================== */
+
+.accessories-container {
+    width: 100%;
+    margin-top: 0.25rem;
+}
+
+.accessories-checkbox-list,
+table.accessories-checkbox-list,
+table[id*="selectedAccessoryIds"] {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 0.625rem;
+    margin: 0;
+}
+
+.accessories-checkbox-list td,
+table[id*="selectedAccessoryIds"] td {
+    padding: 0.875rem 1.25rem !important;
+    background-color: var(--bg-subtle);
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+    vertical-align: middle;
+}
+
+.accessories-checkbox-list tr:hover td,
+table[id*="selectedAccessoryIds"] tr:hover td {
+    background-color: var(--primary-soft);
+    border-color: var(--primary-light) !important;
+}
+
+.accessories-checkbox-list input[type="checkbox"],
+table[id*="selectedAccessoryIds"] input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary);
+    cursor: pointer;
+    margin-right: 0.75rem;
+    vertical-align: middle;
+}
+
+.accessories-checkbox-list label,
+table[id*="selectedAccessoryIds"] label {
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    color: var(--navy-800) !important;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+/* ==========================================================================
+   AÇÕES DO FORMULÁRIO (RODAPÉ)
+   ========================================================================== */
+
+.form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding-top: 1.75rem;
+    margin-top: 1.75rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* ==========================================================================
+   BARRA DE FILTRO (ex: listvehicle.xhtml)
+   ========================================================================== */
+
+.filter-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.75rem;
+    margin-bottom: 1.75rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.filter-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--navy-800);
+    margin-bottom: 1rem;
+}
+
+.filter-header i {
+    color: var(--primary);
+    font-size: 1rem;
+}
+
+.filter-section table {
+    width: auto;
+    border-collapse: separate;
+    border-spacing: 0.75rem 0.5rem;
+}
+
+.filter-section table td {
+    padding: 0 !important;
+    border: none !important;
+    background: none !important;
+}
+
+.filter-section label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+.filter-section select {
+    min-width: 180px;
+    height: 38px;
+    font-size: 0.84rem;
+}
+
+.filter-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.btn-filter {
+    background: var(--primary);
+    color: var(--text-white);
+    padding: 0.5rem 1.25rem;
+    font-size: 0.8125rem;
+    border-radius: var(--radius-md);
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: var(--shadow-xs);
+    transition: all var(--transition-fast);
+}
+
+.btn-filter:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-clean {
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    padding: 0.5rem 1.25rem;
+    font-size: 0.8125rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all var(--transition-fast);
+}
+
+.btn-clean:hover {
+    background: var(--bg-muted);
+    color: var(--navy-800);
+    border-color: var(--border-dark);
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE DE FORMULÁRIOS
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .form-row.two-columns {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .form-card-body {
+        padding: 1.5rem 1.25rem;
+    }
+
+    .filter-section table,
+    .filter-section table > tbody,
+    .filter-section table > tbody > tr,
+    .filter-section table > tbody > tr > td {
+        display: block;
+        width: 100%;
+    }
+
+    .filter-section select {
+        width: 100%;
+        margin-bottom: 0.75rem;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+        width: 100%;
+    }
+
+    .form-actions .btn {
+        width: 100%;
+    }
+}

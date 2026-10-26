@@ -7,34 +7,57 @@
       
 	<h:head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>AutoRent - Agências</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>AutoRent - Rede de Agências</title>
+		<link rel="stylesheet" href="#{request.contextPath}/resources/css/app.css" />
+		<h:outputStylesheet library="css" name="app.css" />
 	</h:head>
 	
-	<h:body>
+	<h:body styleClass="app-body">
+		<!-- Inclusão do Cabeçalho e Barra de Navegação -->
 		<ui:include src="header.xhtml" />
 		
-		<h:panelGroup layout="block">
-			<h1>Agências</h1>
-			
-			<div>
-				<h:dataTable value="#{agencyMB.agenciesList}" var="a" border="1">
-		            <h:column>
-		                <f:facet name="header">ID</f:facet> #{a.id}
-		            </h:column>
-		            <h:column>
-		                <f:facet name="header">Nome</f:facet> #{a.name}
-		            </h:column>
-		            <h:column>
-		                <f:facet name="header">Endereço</f:facet> #{a.address}
-		            </h:column>
-		            <h:column>
-		                <f:facet name="header">Cidade</f:facet> #{a.city}
-		            </h:column>
-		            <h:column>
-		                <f:facet name="header">Telefone</f:facet> #{a.phoneNumber}
-		            </h:column>
-		        </h:dataTable>
+		<!-- Conteúdo Principal -->
+		<main class="main-content">
+			<div class="content-wrapper">
+				
+				<!-- Cabeçalho da Página -->
+				<div class="page-header">
+					<div class="page-title-group">
+						<h1>Rede Integrada de Agências</h1>
+						<p>Consulte todos os pontos físicos de atendimento, retirada de chaves e devolução de automóveis.</p>
+					</div>
+				</div>
+
+				<!-- Tabela de Listagem de Agências -->
+				<div class="table-responsive">
+					<h:dataTable value="#{agencyMB.agenciesList}" var="a" styleClass="data-table">
+			            <h:column>
+			                <f:facet name="header">ID</f:facet> 
+			                <strong>##{a.id}</strong>
+			            </h:column>
+			            <h:column>
+			                <f:facet name="header">Agência</f:facet> 
+			                <strong class="cell-title">
+			                	<i class="bi bi-buildings-fill text-primary cell-icon-lg"></i>#{a.name}
+			                </strong>
+			            </h:column>
+			            <h:column>
+			                <f:facet name="header">Endereço Completo</f:facet> 
+			                <i class="bi bi-geo-alt text-muted cell-icon"></i>#{a.address}
+			            </h:column>
+			            <h:column>
+			                <f:facet name="header">Cidade / Polo</f:facet> 
+			                <strong>#{a.city}</strong>
+			            </h:column>
+			            <h:column>
+			                <f:facet name="header">Contato Telefônico</f:facet> 
+			                <i class="bi bi-telephone text-muted cell-icon"></i>#{a.phoneNumber}
+			            </h:column>
+			        </h:dataTable>
+				</div>
+
 			</div>
-		</h:panelGroup>
+		</main>
 	</h:body>
 </html>

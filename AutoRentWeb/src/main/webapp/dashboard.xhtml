@@ -7,42 +7,171 @@
       
 	<h:head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>AutoRent - Home</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>AutoRent - Dashboard &amp; Gestão de Frota</title>
+		<link rel="stylesheet" href="#{request.contextPath}/resources/css/app.css" />
+		<h:outputStylesheet library="css" name="app.css" />
 	</h:head>
 	
-	<h:body>
+	<h:body styleClass="app-body">
+		<!-- Inclusão do Cabeçalho e Barra de Navegação -->
 		<ui:include src="header.xhtml" />
 		
-		<h:panelGroup layout="block">
-			<h1>Dashboard - Visão Geral da Frota</h1>
-			
-			<h:form>
-				<h:commandButton value="Atualizar Dados" action="#{fleetMB.refresh}" />
-			</h:form>
+		<!-- Conteúdo Principal -->
+		<main class="main-content">
+			<div class="content-wrapper">
+				
+				<!-- Cabeçalho do Dashboard com Ações -->
+				<div class="dashboard-header">
+					<div class="dashboard-title-group">
+						<h1>
+							<i class="bi bi-speedometer2"></i>
+							Visão Geral da Frota
+						</h1>
+						<p>Monitoramento em tempo real dos indicadores de desempenho e status dos veículos.</p>
+					</div>
+					
+					<div class="dashboard-actions">
+						<h:form id="refreshFleetForm">
+							<h:commandButton id="btnRefresh" 
+							                 value="Atualizar Indicadores" 
+							                 action="#{fleetMB.refresh}" 
+							                 styleClass="btn btn-refresh" />
+						</h:form>
+					</div>
+				</div>
 
-			<!-- Cards de Indicadores Globais -->
-			<div class="card-container">
-				<div class="card">
-					<h3>Total de Veículos</h3>
-					<span>#{fleetMB.totalVehicles}</span>
+				<!-- Cards de Indicadores Globais da Frota -->
+				<div class="card-container">
+					
+					<!-- 1. Total de Veículos -->
+					<div class="card card-total">
+						<div class="card-header-flex">
+							<h3>Total de Veículos</h3>
+							<div class="card-icon">
+								<i class="bi bi-car-front-fill"></i>
+							</div>
+						</div>
+						<span class="card-value">#{fleetMB.totalVehicles}</span>
+						<div class="card-footer-note">
+							<i class="bi bi-info-circle text-primary"></i>
+							<span>Frota total cadastrada</span>
+						</div>
+					</div>
+					
+					<!-- 2. Veículos Disponíveis -->
+					<div class="card card-available">
+						<div class="card-header-flex">
+							<h3>Disponíveis</h3>
+							<div class="card-icon">
+								<i class="bi bi-check-circle-fill"></i>
+							</div>
+						</div>
+						<span class="card-value">#{fleetMB.totalAvailable}</span>
+						<div class="card-footer-note">
+							<i class="bi bi-shield-check text-success"></i>
+							<span>Prontos para locação imediata</span>
+						</div>
+					</div>
+					
+					<!-- 3. Veículos Alugados -->
+					<div class="card card-rented">
+						<div class="card-header-flex">
+							<h3>Alugados</h3>
+							<div class="card-icon">
+								<i class="bi bi-key-fill"></i>
+							</div>
+						</div>
+						<span class="card-value">#{fleetMB.totalRented}</span>
+						<div class="card-footer-note">
+							<i class="bi bi-arrow-repeat"></i>
+							<span>Contratos em andamento</span>
+						</div>
+					</div>
+					
+					<!-- 4. Veículos Reservados -->
+					<div class="card card-reserved">
+						<div class="card-header-flex">
+							<h3>Reservados</h3>
+							<div class="card-icon">
+								<i class="bi bi-calendar-check-fill"></i>
+							</div>
+						</div>
+						<span class="card-value">#{fleetMB.totalReserved}</span>
+						<div class="card-footer-note">
+							<i class="bi bi-clock-history"></i>
+							<span>Aguardando retirada de cliente</span>
+						</div>
+					</div>
+					
+					<!-- 5. Em Manutenção -->
+					<div class="card card-maintenance">
+						<div class="card-header-flex">
+							<h3>Em Manutenção</h3>
+							<div class="card-icon">
+								<i class="bi bi-tools"></i>
+							</div>
+						</div>
+						<span class="card-value">#{fleetMB.totalMaintenance}</span>
+						<div class="card-footer-note">
+							<i class="bi bi-exclamation-triangle"></i>
+							<span>Revisão preventiva e reparos</span>
+						</div>
+					</div>
+
 				</div>
-				<div class="card">
-					<h3>Disponíveis</h3>
-					<span>#{fleetMB.totalAvailable}</span>
+
+				<!-- Ações Rápidas de Gestão -->
+				<div class="quick-actions-card">
+					<div class="quick-actions-title">
+						<i class="bi bi-lightning-charge-fill text-primary"></i>
+						<span>Ações Rápidas de Operação</span>
+					</div>
+					
+					<div class="quick-actions-grid">
+						<h:link outcome="createrental" styleClass="action-card-link">
+							<div class="action-card-icon">
+								<i class="bi bi-plus-circle-fill"></i>
+							</div>
+							<div class="action-card-info">
+								<h4>Nova Locação</h4>
+								<p>Iniciar reserva para cliente</p>
+							</div>
+						</h:link>
+
+						<h:link outcome="listvehicle" styleClass="action-card-link">
+							<div class="action-card-icon">
+								<i class="bi bi-car-front-fill"></i>
+							</div>
+							<div class="action-card-info">
+								<h4>Frota de Veículos</h4>
+								<p>Consultar e filtrar catálogo</p>
+							</div>
+						</h:link>
+
+						<h:link outcome="listrental" styleClass="action-card-link">
+							<div class="action-card-icon">
+								<i class="bi bi-journal-bookmark-fill"></i>
+							</div>
+							<div class="action-card-info">
+								<h4>Registro de Reservas</h4>
+								<p>Acompanhar locações ativas</p>
+							</div>
+						</h:link>
+
+						<h:link outcome="listagency" styleClass="action-card-link">
+							<div class="action-card-icon">
+								<i class="bi bi-buildings-fill"></i>
+							</div>
+							<div class="action-card-info">
+								<h4>Rede de Agências</h4>
+								<p>Pontos de retirada e devolução</p>
+							</div>
+						</h:link>
+					</div>
 				</div>
-				<div class="card">
-					<h3>Alugados</h3>
-					<span>#{fleetMB.totalRented}</span>
-				</div>
-				<div class="card">
-					<h3>Reservados</h3>
-					<span>#{fleetMB.totalReserved}</span>
-				</div>
-				<div class="card">
-					<h3>Em Manutenção</h3>
-					<span>#{fleetMB.totalMaintenance}</span>
-				</div>
+
 			</div>
-		</h:panelGroup>
+		</main>
 	</h:body>
 </html>

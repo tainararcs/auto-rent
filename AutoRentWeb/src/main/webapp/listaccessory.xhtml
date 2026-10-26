@@ -7,28 +7,50 @@
       
 	<h:head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>AutoRent - Acessórios</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>AutoRent - Acessórios Disponíveis</title>
+		<link rel="stylesheet" href="#{request.contextPath}/resources/css/app.css" />
+		<h:outputStylesheet library="css" name="app.css" />
 	</h:head>
 	
-	<h:body>
+	<h:body styleClass="app-body">
+		<!-- Inclusão do Cabeçalho e Barra de Navegação -->
 		<ui:include src="header.xhtml" />
 		
-		<h:panelGroup layout="block">
-			<h1>Acessórios Disponíveis</h1>
-			
-			<div>
-				<h:dataTable value="#{accessoryMB.accessoriesList}" var="a" border="1">
-		            <h:column>
-		                <f:facet name="header">ID</f:facet> #{a.id}
-		            </h:column>
-		            <h:column>
-		                <f:facet name="header">Descrição</f:facet> #{a.description}
-		            </h:column>
-		            <h:column>
-		                <f:facet name="header">Taxa Diária</f:facet> #{a.dailyRate}
-		            </h:column>
-		        </h:dataTable>
+		<!-- Conteúdo Principal -->
+		<main class="main-content">
+			<div class="content-wrapper">
+				
+				<!-- Cabeçalho da Página -->
+				<div class="page-header">
+					<div class="page-title-group">
+						<h1>Catálogo de Acessórios e Opcionais</h1>
+						<p>Equipamentos adicionais disponíveis para agregar segurança e conveniência às locações.</p>
+					</div>
+				</div>
+
+				<!-- Tabela de Listagem de Acessórios -->
+				<div class="table-responsive">
+					<h:dataTable value="#{accessoryMB.accessoriesList}" var="a" styleClass="data-table">
+			            <h:column>
+			                <f:facet name="header">ID</f:facet> 
+			                <strong>##{a.id}</strong>
+			            </h:column>
+			            <h:column>
+			                <f:facet name="header">Item Opcional / Descrição</f:facet> 
+			                <strong class="cell-title">
+			                	<i class="bi bi-gear-wide-connected text-primary cell-icon-lg"></i>#{a.description}
+			                </strong>
+			            </h:column>
+			            <h:column>
+			                <f:facet name="header">Tarifa Diária</f:facet> 
+			                <strong class="price-highlight">R$ #{a.dailyRate}</strong>
+			                <span class="unit-suffix">/dia</span>
+			            </h:column>
+			        </h:dataTable>
+				</div>
+
 			</div>
-		</h:panelGroup>
+		</main>
 	</h:body>
 </html>

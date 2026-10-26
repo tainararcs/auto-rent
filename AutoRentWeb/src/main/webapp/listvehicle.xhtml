@@ -7,71 +7,110 @@
 	
 	<h:head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	    <title>AutoRent - Veículos</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	    <title>AutoRent - Frota de Veículos</title>
+	    <link rel="stylesheet" href="#{request.contextPath}/resources/css/app.css" />
+	    <h:outputStylesheet library="css" name="app.css" />
 	</h:head>
 	
-	<h:body>
+	<h:body styleClass="app-body">
+		<!-- Inclusão do Cabeçalho e Barra de Navegação -->
 		<ui:include src="header.xhtml" />
 		
-		<h:panelGroup layout="block">
-			<h1>Frota de Veículos Disponíveis</h1>
+		<!-- Conteúdo Principal -->
+		<main class="main-content">
+			<div class="content-wrapper">
+				
+				<!-- Cabeçalho da Página com Título e Ação -->
+				<div class="page-header">
+					<div class="page-title-group">
+						<h1>Catálogo da Frota de Veículos</h1>
+						<p>Gerencie e consulte todos os automóveis disponíveis, status operacional e agências alocadas.</p>
+					</div>
+					<div>
+						<h:link outcome="createrental" styleClass="btn btn-primary">
+							<i class="bi bi-plus-lg"></i>
+							<span>Nova Reserva</span>
+						</h:link>
+					</div>
+				</div>
+				
+			    <!-- Seção de Filtros Avançados -->
+			    <div class="filter-section">
+			    	<div class="filter-header">
+			    		<i class="bi bi-funnel-fill"></i>
+			    		<span>Filtros de Pesquisa</span>
+			    	</div>
+
+			        <h:form id="filterForm">
+			            <h:panelGrid columns="4" cellpadding="5">
+			                <h:outputLabel for="cat" value="Categoria:" />
+			                <h:selectOneMenu id="cat" value="#{vehicleMB.selectedCategory}">
+			                    <f:selectItem itemLabel="-- Todas as Categorias --" itemValue="" />
+			                    <f:selectItems value="#{vehicleMB.categories}" 
+			                                   var="c" itemLabel="#{c.category}" itemValue="#{c}" />
+			                </h:selectOneMenu>
 			
-		    <!-- Seção de Filtros -->
-		    <div class="filter-section">
-		        <h:form>
-		            <h:panelGrid columns="4" cellpadding="5">
-		                <h:outputLabel for="cat" value="Categoria:" />
-		                <h:selectOneMenu id="cat" value="#{vehicleMB.selectedCategory}">
-		                    <f:selectItem itemLabel="-- Todas --" itemValue="" />
-		                    <f:selectItems value="#{vehicleMB.categories}" 
-		                                   var="c" itemLabel="#{c.category}" itemValue="#{c}" />
-		                </h:selectOneMenu>
-		
-		                <h:outputLabel for="status" value="Status:" />
-		                <h:selectOneMenu id="status" value="#{vehicleMB.selectedStatus}">
-		                    <f:selectItem itemLabel="-- Todos --" itemValue="" />
-		                    <f:selectItems value="#{vehicleMB.status}" 
-			                   var="s" itemLabel="#{s.status}" itemValue="#{s}" />
-		                </h:selectOneMenu>
-		            </h:panelGrid>
-		            
-		            <h:commandButton value="Filtrar" action="#{vehicleMB.filter}" />
-		            <h:commandButton value="Limpar" action="#{vehicleMB.cleanFilters}" />
-		        </h:form>
-		    </div>
-		
-		    <!-- Tabela de Listagem -->
-		    <h:form>
-		        <h:dataTable value="#{vehicleMB.vehiclesList}" var="v" border="1">
-		            <h:column>
-		                <f:facet name="header">ID</f:facet> #{v.id}
-		            </h:column>
-		            <h:column>
-		                <f:facet name="header">Placa</f:facet> #{v.plate}
-		            </h:column>
-		            <h:column>
-		                <f:facet name="header">Marca</f:facet> #{v.brand}
-		            </h:column>
-		            <h:column>
-		                <f:facet name="header">Modelo</f:facet> #{v.model}
-		            </h:column>
-		            <h:column>
-		                <f:facet name="header">Ano</f:facet> #{v.year}
-		            </h:column>
-		            <h:column>
-		                <f:facet name="header">Categoria</f:facet> #{v.category.category}
-		            </h:column>
-		            <h:column>
-		                <f:facet name="header">Diária (R$)</f:facet> #{v.dailyRate}
-		            </h:column>
-		            <h:column>
-		                <f:facet name="header">Status</f:facet> #{v.status.status}
-		            </h:column>
-		            <h:column>
-		                <f:facet name="header">Agência</f:facet> #{v.agency.name}
-		            </h:column>
-		        </h:dataTable>
-		    </h:form>
-		</h:panelGroup>
+			                <h:outputLabel for="status" value="Status:" />
+			                <h:selectOneMenu id="status" value="#{vehicleMB.selectedStatus}">
+			                    <f:selectItem itemLabel="-- Todos os Status --" itemValue="" />
+			                    <f:selectItems value="#{vehicleMB.status}" 
+				                               var="s" itemLabel="#{s.status}" itemValue="#{s}" />
+			                </h:selectOneMenu>
+			            </h:panelGrid>
+			            
+			            <div class="filter-buttons">
+				            <h:commandButton value="Aplicar Filtros" action="#{vehicleMB.filter}" styleClass="btn-filter" />
+				            <h:commandButton value="Limpar Filtros" action="#{vehicleMB.cleanFilters}" styleClass="btn-clean" />
+			            </div>
+			        </h:form>
+			    </div>
+			
+			    <!-- Tabela de Listagem de Veículos -->
+			    <div class="table-responsive">
+				    <h:form id="vehicleTableForm">
+				        <h:dataTable value="#{vehicleMB.vehiclesList}" var="v" styleClass="data-table">
+				            <h:column>
+				                <f:facet name="header">ID</f:facet> 
+				                <strong>##{v.id}</strong>
+				            </h:column>
+				            <h:column>
+				                <f:facet name="header">Placa</f:facet> 
+				                <span class="plate-badge">#{v.plate}</span>
+				            </h:column>
+				            <h:column>
+				                <f:facet name="header">Marca</f:facet> 
+				                #{v.brand}
+				            </h:column>
+				            <h:column>
+				                <f:facet name="header">Modelo</f:facet> 
+				                <strong>#{v.model}</strong>
+				            </h:column>
+				            <h:column>
+				                <f:facet name="header">Ano</f:facet> 
+				                #{v.year}
+				            </h:column>
+				            <h:column>
+				                <f:facet name="header">Categoria</f:facet> 
+				                #{v.category.category}
+				            </h:column>
+				            <h:column>
+				                <f:facet name="header">Diária</f:facet> 
+				                <strong>R$ #{v.dailyRate}</strong>
+				            </h:column>
+				            <h:column>
+				                <f:facet name="header">Status</f:facet> 
+				                <span class="status-pill status-#{v.status.status}">#{v.status.status}</span>
+				            </h:column>
+				            <h:column>
+				                <f:facet name="header">Agência Alocada</f:facet> 
+				                <i class="bi bi-geo-alt text-muted cell-icon"></i>#{v.agency.name}
+				            </h:column>
+				        </h:dataTable>
+				    </h:form>
+			    </div>
+
+			</div>
+		</main>
 	</h:body>
 </html>
