@@ -7,7 +7,6 @@ import trcs.autorent.consts.Consts;
 import trcs.autorent.enums.UserType;
 import trcs.autorent.model.User;
 import trcs.autorent.sessionbean.IUser;
-import trcs.autorent.util.Utils;
 
 public class UserService {
 	/** */
@@ -44,7 +43,7 @@ public class UserService {
 		String email = InputOutput.readString("E-mail:", Consts.CREATE_USER);
 		String password = InputOutput.readString("Senha:", Consts.CREATE_USER);
 		
-        User user = new User(name, cpf, email, Utils.getHashPassword(password), UserType.CLIENT);
+        User user = new User(name, cpf, email, password, UserType.CLIENT);
         if (!iUser.create(user)) {
         	InputOutput.showError("Erro ao cadastrar cliente", Consts.CREATE_USER);
         	return false;
