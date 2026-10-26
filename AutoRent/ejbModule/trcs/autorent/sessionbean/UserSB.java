@@ -25,6 +25,9 @@ public class UserSB implements IUser {
 	@Override
 	public boolean create(User user) {
 	    if (user == null) return false; 
+	    
+	    String passwordHash = String.valueOf(user.getPasswordHash().hashCode());
+	    user.setPasswordHash(passwordHash);
 	    em.persist(user);
 	    return true;
 	}
