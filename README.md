@@ -79,6 +79,4 @@ AutoRent é um sistema de gestão de frotas e locação de veículos desenvolvid
 | `findOverdueRentals` | `SELECT r FROM Rental r WHERE r.dueDate < CURRENT_DATE AND r.returned = FALSE` | Locações vencidas ainda não devolvidas. | Na UI, acesse a seção **Relatórios** → *Locações em atraso*. |
 | `findTotalRevenue` | `SELECT SUM(r.totalPrice) FROM Rental r WHERE r.startDate BETWEEN :start AND :end` | Receita total em um período. | Use o cliente SE ou a página de **Dashboard** que exibe o total do mês. |
 
-> **Dica:** Todos os endpoints REST (se houver) e os serviços EJB podem ser testados via *Postman* ou diretamente pela interface web.
-
 ---
