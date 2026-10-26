@@ -16,7 +16,7 @@ import trcs.autorent.model.Vehicle;
 @Remote(IVehicle.class)
 public class VehicleSB implements IVehicle {
 
-	@PersistenceContext(name = "autorent")
+	@PersistenceContext(unitName = "autorent")
 	private EntityManager em;
 	
 	@Override
