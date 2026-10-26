@@ -9,4 +9,5 @@ import trcs.autorent.model.User;
 @Remote
 public interface IUser extends Crud<User>, IAuth {
     List<User> getByType(UserType type);
+    boolean isAdmin();
 }

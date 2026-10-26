@@ -18,7 +18,7 @@ import trcs.autorent.util.Utils;
 @Remote({IUser.class, IAuth.class})
 public class UserSB implements IUser {
 
-	@PersistenceContext(name = "autorent")
+	@PersistenceContext(unitName = "autorent")
 	private EntityManager em;
 	private User loggedUser;
 	
@@ -44,11 +44,6 @@ public class UserSB implements IUser {
 		return true;
 	}
 
-//	@Override
-//	public User findById(Long id) {
-//		return em.find(User.class, id);
-//	}
-	
 	@Override
 	public User findById(Long id) {
 	    try {
@@ -85,19 +80,37 @@ public class UserSB implements IUser {
 	    
 	    return usersList;
 	}
+
+	@Override
+	public boolean isAdmin() {
+		return loggedUser.getType() == UserType.EMPLOYEE;
+	}
+	
+	@Override
+	public User loginAndReturn(String email, String password) {
+		try {
+			TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.email = :email AND u.passwordHash = :password", User.class);
+			query.setParameter("email", email);
+			query.setParameter("password", Utils.getHashPassword(password));
+			
+			List<User> results = query.getResultList();
+			if (results.isEmpty()) return null;
+			
+			User user = results.get(0);
+			user.setRentalsList(null); // Evita PersistentBag
+			
+			this.loggedUser = user;
+			return user;
+		} catch (Exception e) {
+			return null;
+		}
+	}
 	
 	@Override
     public boolean login(String email, String password) {
         try {
-            TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.email = :email AND u.passwordHash = :password", User.class);
-            query.setParameter("email", email);
-            query.setParameter("password", Utils.getHashPassword(password));
-            
-            User user = query.getSingleResult();
+            User user = loginAndReturn(email, password);
             if (user == null) return false;
-            
-            user.setRentalsList(null); // Evita PersistentBag
-            this.loggedUser = user;
             return true;
         } catch (Exception e) {
             // Retorna falso caso o usuário não seja encontrado ou ocorra erro de credencial
@@ -114,4 +127,5 @@ public class UserSB implements IUser {
     public User getLoggedUser() {
 		return loggedUser;
 	}
+
 }
