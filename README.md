@@ -1,8 +1,6 @@
-# AutoRent
+# Auto Rent
 
-## Descrição curta do projeto
-
-AutoRent é um sistema de gestão de frotas e locação de veículos desenvolvido em **Java** com **Jakarta EE**, oferecendo interface web responsiva (JSF) e um cliente Java SE para consumo de serviços. O objetivo é simplificar o controle de agências, veículos, acessórios e locações, permitindo a administração completa de usuários, permissões e relatórios.
+Auto Rent é um sistema de gestão de frotas e locação de veículos desenvolvido em **Java** com **Jakarta EE**, oferecendo interface web responsiva (JSF) e um cliente Java SE para consumo de serviços. O objetivo é simplificar o controle de agências, veículos, acessórios e locações, permitindo a administração completa de usuários, permissões e relatórios.
 
 ## Tecnologias usadas
 
@@ -25,42 +23,23 @@ AutoRent é um sistema de gestão de frotas e locação de veículos desenvolvid
    > Os scripts `create-schema.sql` e `seed-data.sql` estão na pasta `db/scripts/`.
 
 2. **Configurar o datasource**
-   - No `standalone.xml` (ou `standalone-full.xml`) do WildFly, adicione o datasource `java:/PostgresDS` apontando para o banco criado.
-   - Atualize o arquivo `src/main/resources/META-INF/persistence.xml` com o JNDI do datasource, se necessário.
+   - Em `http://localhost:9900` (interface gráfica de configuração do WildFly), crie o datasource PostgreDS e configure a conexão com o DB.
 
-3. **Compilar e empacotar**
-   ```bash
-   mvn clean package
-   ```
-   Isso gera o EAR `target/AutoRentEAR.ear`.
-
-4. **Deploy no WildFly**
-   - Copie o EAR para a pasta `standalone/deployments/` do WildFly.
-   - Inicie o servidor (ou reinicie caso já esteja em execução):
-   ```bash
-   ./standalone.sh -c standalone-full.xml
-   ```
-   - A aplicação ficará disponível em: `http://localhost:8080/AutoRentWeb`.
+4. **Compilar e empacotar**
+   - Inicie o servidor (ou reinicie caso já esteja em execução).
+   - Acesse: `http://localhost:8080/AutoRentWeb`.
 
 ## Credenciais padrão para testes
 
 | Usuário | Senha | Papel |
 |---------|-------|-------|
-| `admin` | `admin123` | Administrador (acesso total) |
-| `manager` | `manager123` | Gerente de agência |
-| `user` | `user123` | Usuário comum (visualização limitada) |
+| `admin` | `1111` | Administrador (acesso total) |
+| `ana` | `2222` | Usuário comum (visualização limitada) |
+| `ben` | `3333` | Usuário comum (visualização limitada) |
 
 ## Como rodar o client Java SE
 
-1. Navegue até o módulo `AutoRentClient`:
-   ```bash
-   cd AutoRentClient
-   ```
-2. Compile o cliente (já incluído no EAR, mas pode ser executado separadamente):
-   ```bash
-   mvn compile
-   ```
-3. Execute a aplicação cliente:
+1. Execute a aplicação cliente:
    ```bash
    mvn exec:java -Dexec.mainClass="br.com.tainararcs.autorent.client.Main"
    ```
