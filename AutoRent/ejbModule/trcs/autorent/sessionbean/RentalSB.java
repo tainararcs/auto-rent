@@ -17,13 +17,14 @@ import trcs.autorent.model.Vehicle;
 @Remote(IRental.class)
 public class RentalSB implements IRental {
 	
-	@PersistenceContext(name = "autorent")
+	@PersistenceContext(unitName = "autorent")
 	private EntityManager em;
 	
 	@Override
 	public boolean create(Rental rental) {
 		if (rental == null) return false; 
 		em.persist(rental);
+		em.flush(); // Força o envio imediato para o banco de dados.
 		return true;
 	}
 
@@ -49,7 +50,35 @@ public class RentalSB implements IRental {
 	
 	@Override
 	public List<Rental> listAll() {
-		TypedQuery<Rental> query = em.createQuery("SELECT r FROM Rental r", Rental.class);
+		TypedQuery<Rental> query = em.createQuery(
+			"SELECT r FROM Rental r JOIN FETCH r.client JOIN FETCH r.vehicle v JOIN FETCH v.agency JOIN FETCH r.pickupAgency JOIN FETCH r.returnAgency", 
+			Rental.class
+		);
+
+		List<Rental> rentalsList = query.getResultList();
+		if (rentalsList != null) {
+			for (Rental rental : rentalsList) {
+				if (rental.getClient() != null) 
+					rental.getClient().setRentalsList(null);
+				if (rental.getVehicle() != null) {
+					rental.getVehicle().setAccessoriesList(null);
+					if (rental.getVehicle().getAgency() != null) 
+						rental.getVehicle().getAgency().setVehiclesList(null);
+				}
+				if (rental.getPickupAgency() != null) 
+					rental.getPickupAgency().setVehiclesList(null);
+				if (rental.getReturnAgency() != null) 
+					rental.getReturnAgency().setVehiclesList(null);
+			}
+		}
+		
+		return rentalsList;
+	}
+	
+	@Override
+	public List<Rental> getByStatus(RentalStatus status) {
+		TypedQuery<Rental> query = em.createQuery("SELECT r FROM Rental r WHERE status = :status", Rental.class);
+		query.setParameter("status", status);
 		return query.getResultList();
 	}
 	
@@ -83,23 +112,43 @@ public class RentalSB implements IRental {
         return rentalsList;
 	}
 
-	@Override
-	public List<Rental> getByStatus(RentalStatus status) {
-		TypedQuery<Rental> query = em.createQuery("SELECT r FROM Rental r WHERE status = :status", Rental.class);
-		query.setParameter("status", status);
-		return query.getResultList();
-	}
-
 	/**
 	 * @param clientId
 	 * @return Listar com as locações ativas de determinado cliente.
 	 */
 	@Override
-	public List<Rental> getActiveRentalsByClient(Long clientId) {
-		TypedQuery<Rental> query = em.createQuery("SELECT r FROM Rental r JOIN FETCH r.client c JOIN FETCH r.vehicle v WHERE c.id = :clientId AND r.status = :status", Rental.class);
-		query.setParameter("clientId", clientId);
-		query.setParameter("status", RentalStatus.ACTIVE);
-		return query.getResultList();
+	public List<Rental> getRentalsByUser(Long userId) {
+		TypedQuery<Rental> query = em.createQuery(
+			"SELECT r FROM Rental r " +
+			"JOIN FETCH r.client " +
+			"JOIN FETCH r.vehicle " +
+			"JOIN FETCH r.pickupAgency " +
+			"JOIN FETCH r.returnAgency " +
+			"WHERE r.client.id = :userId", 
+			Rental.class
+		);
+		query.setParameter("userId", userId);
+		
+		List<Rental> rentalsList = query.getResultList();
+		
+		// Limpeza opcional de PersistentBags para evitar problemas caso utilize em clientes remotos
+		if (rentalsList != null) {
+			for (Rental rental : rentalsList) {
+				if (rental.getClient() != null) 
+					rental.getClient().setRentalsList(null);
+				if (rental.getVehicle() != null) {
+					rental.getVehicle().setAccessoriesList(null);
+					if (rental.getVehicle().getAgency() != null) 
+						rental.getVehicle().getAgency().setVehiclesList(null);
+				}
+				if (rental.getPickupAgency() != null) 
+					rental.getPickupAgency().setVehiclesList(null);
+				if (rental.getReturnAgency() != null) 
+					rental.getReturnAgency().setVehiclesList(null);
+			}
+		}
+		
+		return rentalsList;
 	}
 	
 	/**
