@@ -14,7 +14,7 @@ import trcs.autorent.model.Agency;
 @Remote(IAgency.class)
 public class AgencySB implements IAgency {
 
-	@PersistenceContext(name = "autorent")
+	@PersistenceContext(unitName = "autorent")
 	private EntityManager em;
 	
 	@Override
@@ -38,36 +38,24 @@ public class AgencySB implements IAgency {
 		em.remove(agency);
 		return true;
 	}
-
-//	@Override
-//	public Agency findById(Long id) {
-//	    return em.find(Agency.class, id);
-//	}
 	
 	@Override
 	public Agency findById(Long id) {
-    try {
-    	Agency agency = em.find(Agency.class, id);
-        if (agency != null) 
-        	agency.setVehiclesList(null);
-        return agency;
-    } catch (Exception e) {
-        return null;
-    }
-}
-	
-//	@Override
-//	public List<Agency> listAll() {
-//		TypedQuery<Agency> query = em.createQuery("SELECT a FROM Agency a", Agency.class);
-//		return query.getResultList();
-//	}
+	    try {
+	    	Agency agency = em.find(Agency.class, id);
+	        if (agency != null) 
+	        	agency.setVehiclesList(null);
+	        return agency;
+	    } catch (Exception e) {
+	        return null;
+	    }
+	}
 	
 	@Override
 	public List<Agency> listAll() {
 	    TypedQuery<Agency> query = em.createQuery("SELECT a FROM Agency a", Agency.class);
 	    List<Agency> agencies = query.getResultList();
 	    
-	    // Evita o erro de PersistentBag limpando a lista de veículos associada a cada agência.
 	    if (agencies != null) {
 	        for (Agency agency : agencies) 
 	            agency.setVehiclesList(null);
@@ -76,10 +64,6 @@ public class AgencySB implements IAgency {
 	    return agencies;
 	}
 	
-	/**
-	 * @param category
-	 * @return Lista com as agências que possuem veículos disponíveis de determinada categoria.
-	 */
 	public List<Agency> getAgenciesWithAvailableVehiclesByCategory(String category) {
 		TypedQuery<Agency> query = em.createQuery("SELECT DISTINCT v.agency FROM Vehicle v WHERE v.category = :category AND v.status = :status", Agency.class);
 		query.setParameter("category", category);

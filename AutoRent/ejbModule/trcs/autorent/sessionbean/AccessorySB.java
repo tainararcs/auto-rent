@@ -13,7 +13,7 @@ import trcs.autorent.model.Accessory;
 @Remote(IAccessory.class)
 public class AccessorySB implements IAccessory {
 	
-	@PersistenceContext(name = "autorent")
+	@PersistenceContext(unitName = "autorent")
 	private EntityManager em;
 	
 	@Override
