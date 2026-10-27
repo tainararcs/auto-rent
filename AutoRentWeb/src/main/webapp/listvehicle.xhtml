@@ -26,7 +26,7 @@
 				<div class="page-header">
 					<div class="page-title-group">
 						<h1>Catálogo da Frota de Veículos</h1>
-						<p>Gerencie e consulte todos os automóveis disponíveis, status operacional e agências alocadas.</p>
+						<p>Gerencie e consulte todos os automóveis disponíveis, status operacional e agências alocadas</p>
 					</div>
 					<div>
 						<h:link outcome="createrental" styleClass="btn btn-primary">
@@ -47,16 +47,14 @@
 			            <h:panelGrid columns="4" cellpadding="5">
 			                <h:outputLabel for="cat" value="Categoria:" />
 			                <h:selectOneMenu id="cat" value="#{vehicleMB.selectedCategory}">
-			                    <f:selectItem itemLabel="-- Todas as Categorias --" itemValue="" />
-			                    <f:selectItems value="#{vehicleMB.categories}" 
-			                                   var="c" itemLabel="#{c.category}" itemValue="#{c}" />
+			                    <f:selectItem itemLabel="Todas as Categorias" itemValue="" />
+			                    <f:selectItems value="#{vehicleMB.categories}" var="c" itemLabel="#{c.category}" itemValue="#{c}" />
 			                </h:selectOneMenu>
 			
 			                <h:outputLabel for="status" value="Status:" />
 			                <h:selectOneMenu id="status" value="#{vehicleMB.selectedStatus}">
-			                    <f:selectItem itemLabel="-- Todos os Status --" itemValue="" />
-			                    <f:selectItems value="#{vehicleMB.status}" 
-				                               var="s" itemLabel="#{s.status}" itemValue="#{s}" />
+			                    <f:selectItem itemLabel="Todos os Status" itemValue="" />
+			                    <f:selectItems value="#{vehicleMB.status}" var="s" itemLabel="#{s.status}" itemValue="#{s}" />
 			                </h:selectOneMenu>
 			            </h:panelGrid>
 			            
@@ -80,20 +78,17 @@
 				                <span class="plate-badge">#{v.plate}</span>
 				            </h:column>
 				            <h:column>
-				                <f:facet name="header">Marca</f:facet> 
-				                #{v.brand}
+				                <f:facet name="header">Marca</f:facet> #{v.brand}
 				            </h:column>
 				            <h:column>
 				                <f:facet name="header">Modelo</f:facet> 
 				                <strong>#{v.model}</strong>
 				            </h:column>
 				            <h:column>
-				                <f:facet name="header">Ano</f:facet> 
-				                #{v.year}
+				                <f:facet name="header">Ano</f:facet> #{v.year}
 				            </h:column>
 				            <h:column>
-				                <f:facet name="header">Categoria</f:facet> 
-				                #{v.category.category}
+				                <f:facet name="header">Categoria</f:facet> #{v.category.category}
 				            </h:column>
 				            <h:column>
 				                <f:facet name="header">Diária</f:facet> 
@@ -101,11 +96,11 @@
 				            </h:column>
 				            <h:column>
 				                <f:facet name="header">Status</f:facet> 
-				                <span class="status-pill status-#{v.status.status}">#{v.status.status}</span>
+				                <span class="status-pill status-#{v.status.status}"> #{v.status.status} </span>
 				            </h:column>
 				            <h:column>
 				                <f:facet name="header">Agência Alocada</f:facet> 
-				                <i class="bi bi-geo-alt text-muted cell-icon"></i>#{v.agency.name}
+				                <i class="bi bi-geo-alt text-muted cell-icon"></i> #{v.agency.name}
 				            </h:column>
 				        </h:dataTable>
 				    </h:form>

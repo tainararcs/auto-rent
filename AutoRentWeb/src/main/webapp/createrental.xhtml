@@ -26,7 +26,7 @@
 				<div class="page-header">
 					<div class="page-title-group">
 						<h1>Nova Locação de Veículo</h1>
-						<p>Selecione as agências de operação, escolha o automóvel desejado e adicione opcionais.</p>
+						<p>Selecione as agências de operação, escolha o automóvel desejado e adicione opcionais</p>
 					</div>
 				</div>
 
@@ -41,7 +41,7 @@
 						</div>
 						<div class="form-card-header-text">
 							<h2>Parâmetros da Reserva</h2>
-							<p>Informe a agência de origem, agência de destino e personalize o contrato.</p>
+							<p>Informe a agência de origem, agência de destino e personalize o contrato</p>
 						</div>
 					</div>
 
@@ -53,24 +53,16 @@
 								<div class="form-row two-columns">
 									<div class="form-group">
 										<h:outputLabel for="pickupAgency" value="Agência de Retirada *" styleClass="form-label" />
-										<h:selectOneMenu id="pickupAgency" 
-										                 value="#{rentalMB.pickupAgencyId}" 
-										                 required="true" 
-										                 requiredMessage="Selecione a agência de retirada."
-										                 styleClass="form-control">
-											<f:selectItem itemLabel="-- Selecione a Agência de Retirada --" itemValue="" />
+										<h:selectOneMenu id="pickupAgency" value="#{rentalMB.pickupAgencyId}" required="true" requiredMessage="Selecione a agência de retirada" styleClass="form-control">
+											<f:selectItem itemLabel="Selecione a Agência de Retirada" itemValue="" />
 											<f:selectItems value="#{rentalMB.agenciesList}" var="a" itemLabel="#{a.name} - #{a.city}" itemValue="#{a.id}" />
 										</h:selectOneMenu>
 									</div>
 									
 									<div class="form-group">
 										<h:outputLabel for="returnAgency" value="Agência de Devolução *" styleClass="form-label" />
-										<h:selectOneMenu id="returnAgency" 
-										                 value="#{rentalMB.returnAgencyId}" 
-										                 required="true" 
-										                 requiredMessage="Selecione a agência de devolução."
-										                 styleClass="form-control">
-											<f:selectItem itemLabel="-- Selecione a Agência de Devolução --" itemValue="" />
+										<h:selectOneMenu id="returnAgency" value="#{rentalMB.returnAgencyId}" required="true" requiredMessage="Selecione a agência de devolução" styleClass="form-control">
+											<f:selectItem itemLabel="Selecione a Agência de Devolução" itemValue="" />
 											<f:selectItems value="#{rentalMB.agenciesList}" var="a" itemLabel="#{a.name} - #{a.city}" itemValue="#{a.id}" />
 										</h:selectOneMenu>
 									</div>
@@ -79,14 +71,9 @@
 								<!-- Linha 2: Veículo Disponível na Frota -->
 								<div class="form-group">
 									<h:outputLabel for="vehicle" value="Veículo da Frota *" styleClass="form-label" />
-									<h:selectOneMenu id="vehicle" 
-									                 value="#{rentalMB.vehicleId}" 
-									                 required="true" 
-									                 requiredMessage="Selecione um veículo."
-									                 styleClass="form-control">
-										<f:selectItem itemLabel="-- Selecione o Veículo Disponível --" itemValue="" />
-										<f:selectItems value="#{rentalMB.availableVehiclesList}" var="v" 
-										               itemLabel="#{v.brand} #{v.model} • Placa: #{v.plate} • R$ #{v.dailyRate}/dia" itemValue="#{v.id}" />
+									<h:selectOneMenu id="vehicle" value="#{rentalMB.vehicleId}" required="true" requiredMessage="Selecione um veículo" styleClass="form-control">
+										<f:selectItem itemLabel="Selecione o Veículo Disponível" itemValue="" />
+										<f:selectItems value="#{rentalMB.availableVehiclesList}" var="v" itemLabel="#{v.brand} #{v.model} • Placa: #{v.plate} • R$ #{v.dailyRate}/dia" itemValue="#{v.id}" />
 									</h:selectOneMenu>
 								</div>
 								
@@ -94,29 +81,20 @@
 								<div class="form-group">
 									<label class="form-label">Acessórios Opcionais</label>
 									<div class="accessories-container">
-										<h:selectManyCheckbox id="selectedAccessoryIds" 
-										                       value="#{rentalMB.selectedAccessoryIds}" 
-										                       layout="pageDirection"
-										                       styleClass="accessories-checkbox-list">
-											<f:selectItems value="#{rentalMB.accessoriesList}" var="acc" 
-											               itemLabel="#{acc.description} (+ R$ #{acc.dailyRate}/dia)" itemValue="#{acc.id}" />
+										<h:selectManyCheckbox id="selectedAccessoryIds" value="#{rentalMB.selectedAccessoryIds}" layout="pageDirection" styleClass="accessories-checkbox-list">
+											<f:selectItems value="#{rentalMB.accessoriesList}" var="acc" itemLabel="#{acc.description} (+ R$ #{acc.dailyRate}/dia)" itemValue="#{acc.id}" />
 										</h:selectManyCheckbox>
 									</div>
 								</div>
-
 							</div>
 							
 							<div class="form-actions">
 								<h:link outcome="dashboard" value="Cancelar" styleClass="btn btn-secondary" />
-								<h:commandButton id="btnConfirmRental" 
-								                 value="Confirmar Reserva" 
-								                 action="#{rentalMB.createRental}" 
-								                 styleClass="btn btn-primary btn-lg" />
+								<h:commandButton id="btnConfirmRental" value="Confirmar Reserva" action="#{rentalMB.createRental}" styleClass="btn btn-primary btn-lg" />
 							</div>
 						</h:form>
 					</div>
 				</div>
-
 			</div>
 		</main>
 	</h:body>
