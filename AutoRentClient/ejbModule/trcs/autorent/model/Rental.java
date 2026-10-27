@@ -3,6 +3,7 @@ package trcs.autorent.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,6 +14,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import trcs.autorent.enums.RentalStatus;
 
@@ -70,6 +73,10 @@ public class Rental implements Serializable {
 	@Column(nullable = false, precision = 10)
 	private Double totalValue;
 
+	@ManyToMany
+	@JoinTable(name = "rental_accessory", joinColumns = @JoinColumn(name = "rental_id"), inverseJoinColumns = @JoinColumn(name = "accessory_id"))
+	private List<Accessory> accessoriesList;
+	
 	/**
      * Construtor padrão vazio da classe Rental.
      */
@@ -279,6 +286,14 @@ public class Rental implements Serializable {
      */
 	public void setTotalValue(Double totalValue) {
 		this.totalValue = totalValue;
+	}
+	
+	public List<Accessory> getAccessoriesList() {
+		return accessoriesList;
+	}
+
+	public void setAccessoriesList(List<Accessory> accessoriesList) {
+		this.accessoriesList = accessoriesList;
 	}
 
 	/**

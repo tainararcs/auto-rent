@@ -29,6 +29,13 @@ public class RentalSB implements IRental {
 	@Override
 	public boolean create(Rental rental) {
 		if (rental == null) return false; 
+		
+		Vehicle vehicle = rental.getVehicle();
+	    if (vehicle != null) {
+	        vehicle.setStatus(VehicleStatus.RESERVED);
+	        em.merge(vehicle);
+	    }
+	    
 		em.persist(rental);
 		em.flush(); // Força o envio imediato para o banco de dados
 		return true;
@@ -68,8 +75,9 @@ public class RentalSB implements IRental {
 	 */
 	@Override
 	public List<Rental> listAll() {
+		// Removido o 'v' após r.vehicle para evitar a violação de strict JPQL compliance
 		TypedQuery<Rental> query = em.createQuery(
-			"SELECT r FROM Rental r JOIN FETCH r.client JOIN FETCH r.vehicle v JOIN FETCH v.agency JOIN FETCH r.pickupAgency JOIN FETCH r.returnAgency", 
+			"SELECT r FROM Rental r JOIN FETCH r.client JOIN FETCH r.vehicle JOIN FETCH r.vehicle.agency JOIN FETCH r.pickupAgency JOIN FETCH r.returnAgency", 
 			Rental.class
 		);
 

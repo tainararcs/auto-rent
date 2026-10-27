@@ -12,6 +12,7 @@ public class Utils {
 	 * @return O hash da palavra-passe em formato de String
 	 */
 	public static String getHashPassword(String password) {
+		if (password == null) return "";
 		return String.valueOf(password.hashCode());
 	}
 }
