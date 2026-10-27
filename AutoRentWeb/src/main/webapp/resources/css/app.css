@@ -294,7 +294,7 @@ select {
 
 /* TABELAS MODERNAS (<h:dataTable>) */
 .table-responsive {
-    width: 100%;
+    width: 101.5%;
     overflow-x: auto;
     background: var(--bg-card);
     border-radius: var(--radius-lg);
@@ -1775,3 +1775,51 @@ body.error-body {
     margin-left: 0.25rem;
     font-weight: 400;
 }
+
+/* --- Indicadores de Status de Locação (RentalStatus) --- */
+.status-active,
+.status-Ativo,
+.status-ATIVO {
+    background-color: var(--status-rented-bg);
+    color: var(--status-rented-text);
+    border: 1px solid var(--status-rented-border);
+}
+.status-active::before,
+.status-Ativo::before,
+.status-ATIVO::before {
+    background-color: var(--status-rented-dot);
+}
+
+/* Correção específica para o status Finalizado / Concluído */
+.status-completed,
+.status-Concluído,
+.status-Concluido,
+.status-CONCLUIDO,
+.status-Finalizado,
+.status-FINALIZADO {
+    background-color: var(--status-available-bg);
+    color: var(--status-available-text);
+    border: 1px solid var(--status-available-border);
+}
+.status-completed::before,
+.status-Concluído::before,
+.status-Concluido::before,
+.status-CONCLUIDO::before,
+.status-Finalizado::before,
+.status-FINALIZADO::before {
+    background-color: var(--status-available-dot);
+}
+
+.status-canceled,
+.status-Cancelado,
+.status-CANCELADO {
+    background-color: var(--status-maintenance-bg);
+    color: var(--status-maintenance-text);
+    border: 1px solid var(--status-maintenance-border);
+}
+.status-canceled::before,
+.status-Cancelado::before,
+.status-CANCELADO::before {
+    background-color: var(--status-maintenance-dot);
+}
+

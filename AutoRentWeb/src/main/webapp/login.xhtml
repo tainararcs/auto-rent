@@ -13,9 +13,7 @@
 	</h:head>
 	
 	<h:body styleClass="login-body">
-		
 		<div class="auth-wrapper">
-			
 			<!-- Painel Visual da Esquerda (Showcase Corporativo) -->
 			<div class="auth-visual">
 				
@@ -99,6 +97,9 @@
 
 						<div class="auth-card">
 							<h:form id="loginForm">
+								<!-- Mensagens Globais de Validação do JSF -->
+								<h:messages globalOnly="false" id="authMessages" styleClass="messages-list" errorStyle="color: red;" />
+								
 								<!-- Campo de E-mail -->
 								<div class="form-group">
 									<h:outputLabel value="E-mail Corporativo" for="email" />
