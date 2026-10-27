@@ -5,42 +5,39 @@ Auto Rent é um sistema de gestão de frotas e locação de veículos desenvolvi
 ## Tecnologias usadas
 
 - **Java**: 21 (LTS)
-- **Jakarta EE**: 10 (Jakarta Faces 4.0, Jakarta Persistence 3.1, etc.)
-- **Servidor de aplicação recomendado**: **WildFly 27** (ou qualquer servidor compatível com Jakarta EE 10)
-- **Frontend**: JSF (Facelets), HTML5, CSS3 (arquivo `resources/css/app.css`), Bootstrap Icons
-- **Build tool**: Maven 3.9.x
-- **Banco de dados**: PostgreSQL 16 (scripts SQL incluídos)
+- **Jakarta EE**: 10 (Jakarta Faces 4.0, Jakarta Persistence 3.1, EJB 4.0)
+- **Servidor de Aplicação**: **WildFly 27** (ou superior compatível com Jakarta EE 10)
+- **Frontend Web**: JSF (Facelets), CSS3 customizado, Bootstrap Icons
+- **Cliente Desktop**: Java SE (com chamadas remotas via EJB Client)
+- **Ferramenta de Build**: Maven 3.9.x
+- **Banco de Dados**: PostgreSQL 16 (scripts SQL incluídos)
 
 ## Como rodar localmente
 
-1. **Clonar o repositório**
-   `git clone `
 
-2. Crie e inicie o servidor
-   - Baixe o Widfly
-   - Adicione o AutoRentEAR ao servidor
-   - Inicie-o
+Siga o passo a passo abaixo para configurar e executar o projeto no seu ambiente de desenvolvimento:
 
-3. **Banco de dados**
-   - Crie o banco de dados e usuário
-   ```bash
+### 1. Clonar o Repositório
+```bash
+git clone [https://github.com/tainararcs/auto-rent.git](https://github.com/tainararcs/auto-rent.git)
+cd auto-rent
+```
+2. Configurar o Banco de Dados
+   1. Crie uma base de dados no PostgreSQL chamada autorent
+   ```
    createdb autorent
-   psql -d autorent -f db/scripts/autorent_dump.sql
    ```
-
-4. **Configurar o datasource**
-   - Em `http://localhost:9900` (interface gráfica de configuração do WildFly), crie o datasource PostgreDS e configure a conexão com o DB.
-
-5. **Executar o projeto**
-   - Clone o repositório `git clone `
-   - Inicie o servidor (ou reinicie caso já esteja em execução).
-   - Acesse: `http://localhost:8080/AutoRentWeb`.
-
-6. Execute a aplicação o client Java SE:
-   ```bash
-   CTRL + F11
+   2. Importe o script de dump com a estrutura e os dados iniciais:   
    ```
-   O cliente abrirá um console que permite autenticar usando as credenciais acima e executar operações de CRUD via JPA.
+   -d autorent -f db/autorent_dump.sql
+   ```
+3. Configurar o Datasource no WildFlyInicie o seu servidor WildFly
+- Acesse o painel de administração web do WildFly (geralmente em http://localhost:9990).
+- Certifique-se de que o driver do PostgreSQL (postgresql-42.x.x.jar) está instalado.
+- Crie um Datasource com o nome JNDI java:/PostgreDS associado à base de dados autorent, configurando corretamente as credenciais de acesso (user e password).
+4. Compilar o projeto 
+- Atalho na IDE: Ctrl + F11
+- cliente abrirá um console que permite autenticar usando as credenciais acima e executar operações de CRUD via JPA.
    
 ## Credenciais padrão para testes
 
@@ -48,7 +45,7 @@ Auto Rent é um sistema de gestão de frotas e locação de veículos desenvolvi
 |---------|-------|-------|
 | `admin` | `1111` | Administrador (acesso total) |
 | `ana` | `2222` | Usuário comum (visualização limitada) |
-| `ben` | `3333` | Usuário comum (visualização limitada) |
+| `bruno` | `3333` | Usuário comum (visualização limitada) |
 
 
 ## Lista de JPQL implementadas e como testá‑las
