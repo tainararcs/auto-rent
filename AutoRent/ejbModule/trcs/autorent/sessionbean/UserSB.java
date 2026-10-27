@@ -118,8 +118,12 @@ public class UserSB implements IUser {
 		query.setParameter("email", email);
 		query.setParameter("password", Utils.getHashPassword(password));
 		
-		User user = query.getSingleResult();
-		user.setRentalsList(null); // Evita PersistentBag
+		// Utiliza getResultList em vez de getSingleResult para evitar NoResultException quando o login falha
+		List<User> results = query.getResultList();
+		if (results == null || results.isEmpty()) return null;
+		
+		User user = results.get(0);
+		user.setRentalsList(null); // Evita PersistentBag.
 		
 		this.loggedUser = user;
 		return user;
