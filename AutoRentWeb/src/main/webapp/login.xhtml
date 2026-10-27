@@ -6,7 +6,7 @@
 	<h:head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>AutoRent - Acesso ao Sistema</title>
+		<title>AutoRent</title>
 		<link rel="stylesheet" href="#{request.contextPath}/resources/css/app.css" />
 		<h:outputStylesheet library="css" name="app.css" />
 		<link rel="icon" href="#{request.contextPath}/resources/icon/icon-car.png" type="image/png" />
@@ -36,16 +36,14 @@
 					
 					<h1>Potência, Controle &amp; <span>Mobilidade Inteligente</span></h1>
 					
-					<p>
-						Solução corporativa para administração estratégica de veículos, controle de disponibilidade em tempo real e gestão ágil de contratos de locação.
-					</p>
+					<p>Solução corporativa para administração estratégica de veículos, controle de disponibilidade em tempo real e gestão ágil de contratos de locação</p>
 
 					<div class="visual-features">
 						<div class="feature-item">
 							<i class="bi bi-check2"></i>
 							<div>
 								<h4>Monitoramento em Tempo Real</h4>
-								<p>Status atualizado de disponibilidade, locação e manutenção da frota.</p>
+								<p>Status atualizado de disponibilidade, locação e manutenção da frota</p>
 							</div>
 						</div>
 
@@ -53,7 +51,7 @@
 							<i class="bi bi-check2"></i>
 							<div>
 								<h4>Reservas e Devoluções Flexíveis</h4>
-								<p>Agendamento rápido entre agências com cálculo automático de diárias.</p>
+								<p>Agendamento rápido entre agências com cálculo automático de diárias</p>
 							</div>
 						</div>
 
@@ -61,7 +59,7 @@
 							<i class="bi bi-check2"></i>
 							<div>
 								<h4>Rede Integrada de Atendimento</h4>
-								<p>Rastreamento de pontos físicos de atendimento e pacotes de acessórios.</p>
+								<p>Rastreamento de pontos físicos de atendimento e pacotes de acessórios</p>
 							</div>
 						</div>
 					</div>
@@ -81,155 +79,103 @@
 					<!-- Alternador de Abas de Autenticação -->
 					<div class="auth-tabs">
 						<button type="button" class="auth-tab-btn active" id="tabLogin" onclick="switchAuthTab('login')">
-							<i class="bi bi-box-arrow-in-right tab-btn-icon"></i>
-							Entrar na Conta
+							<i class="bi bi-box-arrow-in-right tab-btn-icon"></i> Entrar na Conta
 						</button>
 						<button type="button" class="auth-tab-btn" id="tabSignup" onclick="switchAuthTab('signup')">
-							<i class="bi bi-person-plus tab-btn-icon"></i>
-							Criar Cadastro
+							<i class="bi bi-person-plus tab-btn-icon"></i> Criar Cadastro
 						</button>
 					</div>
 
 					<!-- Mensagens Globais de Validação do JSF -->
 					<h:messages globalOnly="false" id="authMessages" />
 
-					<!-- ==============================================
-					     ABA 1: FORMULÁRIO DE LOGIN (LOG IN)
-					     ============================================== -->
+					<!-- ABA 1: FORMULÁRIO DE LOGIN (LOG IN) -->
 					<div class="auth-panel active" id="loginPanel">
 						
 						<div class="auth-header">
 							<h2>Acessar Painel</h2>
-							<p>Insira suas credenciais corporativas para entrar no sistema.</p>
+							<p>Insira suas credenciais corporativas para entrar no sistema</p>
 						</div>
 
 						<div class="auth-card">
 							<h:form id="loginForm">
-								
 								<!-- Campo de E-mail -->
 								<div class="form-group">
 									<h:outputLabel value="E-mail Corporativo" for="email" />
 									<div class="input-with-icon">
 										<i class="bi bi-envelope"></i>
-										<h:inputText id="email" 
-										             value="#{userMB.user.email}" 
-										             required="true" 
-										             requiredMessage="Informe seu e-mail corporativo." 
-										             styleClass="form-control" />
+										<h:inputText id="email" value="#{userMB.user.email}" required="true" requiredMessage="Informe seu e-mail corporativo" styleClass="form-control" />
 									</div>
 								</div>
-								
 								<!-- Campo de Senha -->
 								<div class="form-group">
 									<h:outputLabel value="Senha de Acesso" for="password" />
 									<div class="input-with-icon">
 										<i class="bi bi-lock"></i>
-										<h:inputSecret id="password" 
-										               value="#{userMB.user.passwordHash}" 
-										               required="true" 
-										               requiredMessage="Informe sua senha de acesso." 
-										               styleClass="form-control" />
+										<h:inputSecret id="password" value="#{userMB.user.passwordHash}" required="true" requiredMessage="Informe sua senha de acesso" styleClass="form-control" />
 									</div>
 								</div>
-
 								<!-- Botão de Ação de Login -->
-								<h:commandButton action="#{userMB.login}" 
-								                 value="Entrar no Sistema" 
-								                 styleClass="btn btn-primary btn-block auth-btn-submit" 
-								                 id="btnLoginSubmit" />
+								<h:commandButton action="#{userMB.login}" value="Entrar no Sistema" styleClass="btn btn-primary btn-block auth-btn-submit" id="btnLoginSubmit" />
 							</h:form>
 						</div>
 
 					</div>
 
-					<!-- ==============================================
-					     ABA 2: FORMULÁRIO DE CADASTRO (SIGN UP)
-					     ============================================== -->
+					<!-- ABA 2: FORMULÁRIO DE CADASTRO (SIGN UP) -->
 					<div class="auth-panel" id="signupPanel">
 						
 						<div class="auth-header">
 							<h2>Criar Nova Conta</h2>
-							<p>Preencha os dados abaixo para se cadastrar como cliente.</p>
+							<p>Preencha os dados abaixo para se cadastrar como cliente</p>
 						</div>
 
 						<div class="auth-card">
 							<h:form id="signupForm">
-								
 								<!-- Campo de Nome -->
 								<div class="form-group">
 									<h:outputLabel value="Nome Completo" for="name" />
 									<div class="input-with-icon">
 										<i class="bi bi-person"></i>
-										<h:inputText id="name" 
-										             value="#{userMB.user.name}" 
-										             required="true" 
-										             requiredMessage="Informe seu nome completo." 
-										             styleClass="form-control" />
+										<h:inputText id="name" value="#{userMB.user.name}" required="true" requiredMessage="Informe seu nome completo" styleClass="form-control" />
 									</div>
 								</div>
-
 								<!-- Campo de CPF -->
 								<div class="form-group">
 									<h:outputLabel value="CPF (Documento)" for="cpf" />
 									<div class="input-with-icon">
 										<i class="bi bi-card-text"></i>
-										<h:inputText id="cpf" 
-										             value="#{userMB.user.cpf}" 
-										             required="true" 
-										             requiredMessage="Informe seu CPF." 
-										             styleClass="form-control" />
+										<h:inputText id="cpf" value="#{userMB.user.cpf}" required="true" requiredMessage="Informe seu CPF" styleClass="form-control" />
 									</div>
 								</div>
-								
 								<!-- Campo de E-mail de Cadastro -->
 								<div class="form-group">
 									<h:outputLabel value="E-mail" for="email" />
 									<div class="input-with-icon">
 										<i class="bi bi-envelope"></i>
-										<h:inputText id="email" 
-										             value="#{userMB.user.email}" 
-										             required="true" 
-										             requiredMessage="Informe um e-mail válido." 
-										             styleClass="form-control" />
+										<h:inputText id="email" value="#{userMB.user.email}" required="true" requiredMessage="Informe um e-mail válido" styleClass="form-control" />
 									</div>
 								</div>
-								
 								<!-- Campo de Senha de Cadastro -->
 								<div class="form-group">
 									<h:outputLabel value="Senha de Acesso" for="password" />
 									<div class="input-with-icon">
 										<i class="bi bi-lock"></i>
-										<h:inputSecret id="password" 
-										               value="#{userMB.user.passwordHash}" 
-										               required="true" 
-										               requiredMessage="Defina uma senha de acesso." 
-										               styleClass="form-control" />
+										<h:inputSecret id="password" value="#{userMB.user.passwordHash}" required="true" requiredMessage="Defina uma senha de acesso" styleClass="form-control" />
 									</div>
 								</div>
 
 								<!-- Botão de Ação de Cadastro -->
-								<h:commandButton action="#{userMB.signin}" 
-								                 value="Concluir Cadastro" 
-								                 styleClass="btn btn-primary btn-block auth-btn-submit" 
-								                 id="btnSignupSubmit" />
+								<h:commandButton action="#{userMB.signin}" value="Concluir Cadastro" styleClass="btn btn-primary btn-block auth-btn-submit" id="btnSignupSubmit" />
 							</h:form>
 						</div>
-
 					</div>
-
-					<p class="auth-terms">
-						Acesso restrito e protegido por autenticação segura 
-						• AutoRent Fleet System
-					</p>
-
+					<p class="auth-terms">Acesso restrito e protegido por autenticação segura <br></br>• AutoRent Fleet System</p>
 				</div>
-
 			</div>
-
 		</div>
 
 		<!-- Script de suporte para alternância das abas -->
 		<script src="#{request.contextPath}/resources/js/app.js"></script>
-
 	</h:body>
 </html>

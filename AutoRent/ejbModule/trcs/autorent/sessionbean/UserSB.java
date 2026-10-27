@@ -25,8 +25,7 @@ public class UserSB implements IUser {
 	@Override
 	public boolean create(User user) {
 	    if (user == null) return false; 
-	    
-	    String passwordHash = String.valueOf(user.getPasswordHash().hashCode());
+	    String passwordHash = Utils.getHashPassword(user.getPasswordHash());
 	    user.setPasswordHash(passwordHash);
 	    em.persist(user);
 	    return true;
@@ -96,10 +95,7 @@ public class UserSB implements IUser {
 			query.setParameter("email", email);
 			query.setParameter("password", Utils.getHashPassword(password));
 			
-			List<User> results = query.getResultList();
-			if (results.isEmpty()) return null;
-			
-			User user = results.get(0);
+			User user = query.getSingleResult();
 			user.setRentalsList(null); // Evita PersistentBag
 			
 			this.loggedUser = user;
@@ -109,16 +105,12 @@ public class UserSB implements IUser {
 		}
 	}
 	
+	// Retorna falso caso o usuário não seja encontrado ou ocorra erro de credencial
 	@Override
     public boolean login(String email, String password) {
-        try {
-            User user = loginAndReturn(email, password);
-            if (user == null) return false;
-            return true;
-        } catch (Exception e) {
-            // Retorna falso caso o usuário não seja encontrado ou ocorra erro de credencial
-            return false;
-        }
+		User user = loginAndReturn(email, password);
+        if (user == null) return false;
+        return true;
     }
 
     @Override
