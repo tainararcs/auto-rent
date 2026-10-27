@@ -125,20 +125,23 @@ public class RentalSB implements IRental {
         List<Rental> rentalsList = query.getResultList();
         if (rentalsList == null) return new ArrayList<>();
         
-        for (Rental rental : rentalsList) {
-            // Limpa as coleções e listas das entidades associadas que geram PersistentBag.
-            if (rental.getClient() != null) 
-            	rental.getClient().setRentalsList(null);
-            if (rental.getVehicle() != null) {
-            	rental.getVehicle().setAccessoriesList(null);
-                if (rental.getVehicle().getAgency() != null) 
-                	rental.getVehicle().getAgency().setVehiclesList(null);
-            }
-            if (rental.getPickupAgency() != null) 
-            	rental.getPickupAgency().setVehiclesList(null);
-            if (rental.getReturnAgency() != null) 
-            	rental.getReturnAgency().setVehiclesList(null);
-        }
+		for (Rental rental : rentalsList) {
+			// Limpa a coleção N:M de acessórios da própria locação para evitar o PersistentBag remoto
+			rental.setAccessoriesList(null);
+
+			// Limpa as coleções filhas das entidades associadas
+			if (rental.getClient() != null) 
+				rental.getClient().setRentalsList(null);
+			if (rental.getVehicle() != null) {
+				rental.getVehicle().setAccessoriesList(null);
+				if (rental.getVehicle().getAgency() != null) 
+					rental.getVehicle().getAgency().setVehiclesList(null);
+			}
+			if (rental.getPickupAgency() != null) 
+				rental.getPickupAgency().setVehiclesList(null);
+			if (rental.getReturnAgency() != null) 
+				rental.getReturnAgency().setVehiclesList(null);
+		}
         
         return rentalsList;
 	}
@@ -200,7 +203,7 @@ public class RentalSB implements IRental {
             Vehicle vehicle = rental.getVehicle();
             if (vehicle == null) return false;
                 
-            vehicle.setStatus(VehicleStatus.RESERVED);
+            vehicle.setStatus(VehicleStatus.RENTED);
             em.merge(vehicle);
         }
         
