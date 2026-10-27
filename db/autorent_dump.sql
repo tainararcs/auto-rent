@@ -31,4 +31,4 @@ INSERT INTO vehicle (brand, model, year, plate, dailyrate, category, status, age
 -- 5. Inserção de Locações Prontas (Utilizando 'COMPLETED' no lugar de FINISHED)
 INSERT INTO rental (pickupdate, returndate, duedate, totalvalue, status, pickup_agency_id, return_agency_id, client_id, vehicle_id) VALUES
 ('2026-10-01', '2026-10-05', '2026-10-05', 600.00, 'COMPLETED', 1, 1, 2, 1),
-('2026-10-10', '2026-10-15', '2026-10-15', 900.00, 'ACTIVE', 1, 2, 3, 2);
+('2026-10-10', '', '2026-10-15', 900.00, 'ACTIVE', 1, 2, 3, 2);
