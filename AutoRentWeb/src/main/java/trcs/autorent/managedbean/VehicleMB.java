@@ -12,29 +12,32 @@ import trcs.autorent.enums.VehicleStatus;
 import trcs.autorent.model.Vehicle;
 import trcs.autorent.sessionbean.IVehicle;
 
+/**
+ * Managed Bean com escopo de requisição para gerir a listagem e filtragem de veículos na camada web (JSF)[cite: 54].
+ */
 @RequestScoped
 @Named("vehicleMB")
 public class VehicleMB implements Serializable {
-	/**	 */
+	
+	/** Constante de serialização[cite: 54]. */
 	private static final long serialVersionUID = 1L;
 	
 	@EJB
 	private IVehicle iVehicle;
 	
 	private List<Vehicle> vehiclesList;
-    
-    // Campos de Filtro.
     private VehicleStatus selectedStatus;
     private VehicleCategory selectedCategory;
 
-
+    /**
+     * Inicializa carregando todos os veículos por padrão[cite: 54].
+     */
     @PostConstruct
     public void init() {
-        // Carrega todos os veículos por padrão ao abrir a página.
         vehiclesList = iVehicle.listAll();
     }
     
-    /** Método de Filtragem. */
+    /** Aplica filtros por categoria ou status na lista de veículos[cite: 54]. */
     public void filter() {
         if (selectedCategory != null) 
             vehiclesList = iVehicle.getByCategory(selectedCategory);
@@ -44,37 +47,44 @@ public class VehicleMB implements Serializable {
             vehiclesList = iVehicle.listAll();
     }
 
-    /** Limpar filtros. */
+    /** Limpa os filtros aplicados e restaura a lista completa[cite: 54]. */
     public void cleanFilters() {
         selectedCategory = null;
         selectedStatus = null;
         vehiclesList = iVehicle.listAll();
     }
 
+    /** Retorna a lista de veículos[cite: 54]. */
     public List<Vehicle> getVehiclesList() {
         return vehiclesList;
     }
 
+    /** Retorna a categoria selecionada para filtro[cite: 54]. */
     public VehicleCategory getSelectedCategory() {
         return selectedCategory;
     }
 
+    /** Define a categoria selecionada para filtro[cite: 54]. */
     public void setSelectedCategory(VehicleCategory selectedCategory) {
         this.selectedCategory = selectedCategory;
     }
 
+    /** Retorna o status selecionado para filtro[cite: 54]. */
     public VehicleStatus getSelectedStatus() {
         return selectedStatus;
     }
 
+    /** Define o status selecionado para filtro[cite: 54]. */
     public void setSelectedStatus(VehicleStatus selectedStatus) {
         this.selectedStatus = selectedStatus;
     }
     
+    /** Retorna os valores possíveis de status para componentes de seleção[cite: 54]. */
     public VehicleStatus[] getStatus() {
         return VehicleStatus.values();
     }
 
+    /** Retorna os valores possíveis de categoria para componentes de seleção[cite: 54]. */
     public VehicleCategory[] getCategories() {
         return VehicleCategory.values();
     }
