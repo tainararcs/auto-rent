@@ -13,6 +13,9 @@ import trcs.autorent.enums.VehicleStatus;
 import trcs.autorent.model.Rental;
 import trcs.autorent.model.Vehicle;
 
+/**
+ * Implementação do Session Bean Stateless para a gestão de locações.
+ */
 @Stateless
 @Remote(IRental.class)
 public class RentalSB implements IRental {
@@ -20,14 +23,20 @@ public class RentalSB implements IRental {
 	@PersistenceContext(unitName = "autorent")
 	private EntityManager em;
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean create(Rental rental) {
 		if (rental == null) return false; 
 		em.persist(rental);
-		em.flush(); // Força o envio imediato para o banco de dados.
+		em.flush(); // Força o envio imediato para o banco de dados
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean update(Rental rental) {
 		if (rental == null) return false; 
@@ -35,6 +44,9 @@ public class RentalSB implements IRental {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean remove(Long id) {
 		Rental rental = findById(id);
@@ -43,11 +55,17 @@ public class RentalSB implements IRental {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Rental findById(Long id) {
 		return em.find(Rental.class, id);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Rental> listAll() {
 		TypedQuery<Rental> query = em.createQuery(
@@ -75,6 +93,9 @@ public class RentalSB implements IRental {
 		return rentalsList;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Rental> getByStatus(RentalStatus status) {
 		TypedQuery<Rental> query = em.createQuery("SELECT r FROM Rental r WHERE status = :status", Rental.class);
@@ -84,6 +105,8 @@ public class RentalSB implements IRental {
 	
 	/**
 	 * Lista locações ativas/em andamento.
+	 * 
+	 * @return Lista de locações ativas ou reservadas
 	 */
 	@Override
 	public List<Rental> getActiveRentals() {
@@ -113,25 +136,19 @@ public class RentalSB implements IRental {
 	}
 
 	/**
-	 * @param clientId
-	 * @return Listar com as locações ativas de determinado cliente.
+	 * {@inheritDoc}
 	 */
 	@Override
 	public List<Rental> getRentalsByUser(Long userId) {
 		TypedQuery<Rental> query = em.createQuery(
-			"SELECT r FROM Rental r " +
-			"JOIN FETCH r.client " +
-			"JOIN FETCH r.vehicle " +
-			"JOIN FETCH r.pickupAgency " +
-			"JOIN FETCH r.returnAgency " +
-			"WHERE r.client.id = :userId", 
+			"SELECT r FROM Rental r JOIN FETCH r.client JOIN FETCH r.vehicle JOIN FETCH r.pickupAgency JOIN FETCH r.returnAgency WHERE r.client.id = :userId", 
 			Rental.class
 		);
 		query.setParameter("userId", userId);
 		
 		List<Rental> rentalsList = query.getResultList();
 		
-		// Limpeza opcional de PersistentBags para evitar problemas caso utilize em clientes remotos
+		// Limpeza opcional de PersistentBags para evitar problemas caso utilize em clientes remotos.
 		if (rentalsList != null) {
 			for (Rental rental : rentalsList) {
 				if (rental.getClient() != null) 
@@ -152,9 +169,7 @@ public class RentalSB implements IRental {
 	}
 	
 	/**
-	 * consulta envolvendo relacionamento entre duas ou more entidades (Ex: Detalhes completos de locações por cidade da agência de retirada).
-	 * @param city
-	 * @return Lista
+	 * {@inheritDoc}
 	 */
 	@Override
 	public List<Rental> getRentalsByPickupCity(String city) {
@@ -164,7 +179,7 @@ public class RentalSB implements IRental {
 	}
 	
 	/**
-	 * Registro de retirada do veículo.
+	 * {@inheritDoc}
 	 */
     @Override
     public boolean registerPickup(Long rentalId) {
@@ -185,7 +200,7 @@ public class RentalSB implements IRental {
     }
 
     /**
-     * Registro de devolução.
+     * {@inheritDoc}
      */
     @Override
     public boolean registerReturn(Long rentalId) {

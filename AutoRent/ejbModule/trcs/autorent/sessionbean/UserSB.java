@@ -13,6 +13,7 @@ import trcs.autorent.util.Utils;
 
 /**
  * Gerenciamento de Sessão do Usuário.
+ * Implementa Stateful EJB para manter o estado do utilizador autenticado.
  */
 @Stateful
 @Remote({IUser.class, IAuth.class})
@@ -22,6 +23,9 @@ public class UserSB implements IUser {
 	private EntityManager em;
 	private User loggedUser;
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean create(User user) {
 	    if (user == null) return false; 
@@ -31,6 +35,9 @@ public class UserSB implements IUser {
 	    return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean update(User user) {
 		if (user == null) return false; 
@@ -38,6 +45,9 @@ public class UserSB implements IUser {
 		return true;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean remove(Long id) {
 		User user = findById(id);
@@ -46,28 +56,36 @@ public class UserSB implements IUser {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public User findById(Long id) {
-	    try {
-	        // Usa JPQL com query explícita em vez de em.find para evitar proxies do Hibernate
-	        User user = em.find(User.class, id);
-	        if (user != null) 
-	            user.setRentalsList(null); // Evita o PersistentBag
-	        return user;
-	    } catch (Exception e) {
-	        return null; // Retorna null se não encontrar
-	    }
+		// Usa JPQL com query explícita em vez de em.find para evitar proxies do Hibernate.
+	    User user = em.find(User.class, id);
+	    if (user == null) return null;
+	    
+        user.setRentalsList(null); // Evita o PersistentBag.
+        return user;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<User> listAll() {
 		List<User> users = em.createQuery("SELECT u FROM User u", User.class).getResultList();
-	    if (users != null) 
-	        for (User user : users) 
-	        	user.setRentalsList(null); 
+	    if (users == null) return null; 
+        
+	    for (User user : users) 
+        	user.setRentalsList(null); 
+	    
 	    return users;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<User> getByType(UserType type) {
 		TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.type = :type", User.class);
@@ -83,29 +101,33 @@ public class UserSB implements IUser {
 	    return usersList;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean isAdmin() {
 		return loggedUser.getType() == UserType.EMPLOYEE;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public User loginAndReturn(String email, String password) {
-		try {
-			TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.email = :email AND u.passwordHash = :password", User.class);
-			query.setParameter("email", email);
-			query.setParameter("password", Utils.getHashPassword(password));
-			
-			User user = query.getSingleResult();
-			user.setRentalsList(null); // Evita PersistentBag
-			
-			this.loggedUser = user;
-			return user;
-		} catch (Exception e) {
-			return null;
-		}
+		TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.email = :email AND u.passwordHash = :password", User.class);
+		query.setParameter("email", email);
+		query.setParameter("password", Utils.getHashPassword(password));
+		
+		User user = query.getSingleResult();
+		user.setRentalsList(null); // Evita PersistentBag
+		
+		this.loggedUser = user;
+		return user;
 	}
 	
-	// Retorna falso caso o usuário não seja encontrado ou ocorra erro de credencial
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
     public boolean login(String email, String password) {
 		User user = loginAndReturn(email, password);
@@ -113,11 +135,17 @@ public class UserSB implements IUser {
         return true;
     }
 
+	/**
+	 * {@inheritDoc}
+	 */
     @Override
     public void logout() {
         this.loggedUser = null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public User getLoggedUser() {
 		return loggedUser;

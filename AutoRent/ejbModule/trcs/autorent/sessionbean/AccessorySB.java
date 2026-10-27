@@ -9,6 +9,9 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import trcs.autorent.model.Accessory;
 
+/**
+ * Implementação do Session Bean Stateless para a gestão de acessórios.
+ */
 @Stateless
 @Remote(IAccessory.class)
 public class AccessorySB implements IAccessory {
@@ -16,6 +19,9 @@ public class AccessorySB implements IAccessory {
 	@PersistenceContext(unitName = "autorent")
 	private EntityManager em;
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean create(Accessory accessory) {
 		if (accessory == null) return false;
@@ -23,6 +29,9 @@ public class AccessorySB implements IAccessory {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean update(Accessory accessory) {
 		if (accessory == null) return false;
@@ -30,6 +39,9 @@ public class AccessorySB implements IAccessory {
 		return true;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean remove(Long id) {
 		Accessory accessory = findById(id);
@@ -38,28 +50,26 @@ public class AccessorySB implements IAccessory {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Accessory findById(Long id) {
 		return em.find(Accessory.class, id);
 	}
-
-//	@Override
-//	public List<Accessory> listAll() {
-//		TypedQuery<Accessory> query = em.createQuery("SELECT a FROM Accessory a", Accessory.class);
-//		return query.getResultList();
-//	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Accessory> listAll() {
 		TypedQuery<Accessory> query = em.createQuery("SELECT a FROM Accessory a", Accessory.class);
 	    List<Accessory> accessories = query.getResultList();
 	    
 	    // Evita o erro de PersistentBag limpando a lista de veículos associada a cada agência
-	    if (accessories != null) {
-	        for (Accessory accessory : accessories) {
+	    if (accessories != null) 
+	        for (Accessory accessory : accessories) 
 	        	accessory.setVehiclesList(null);
-	        }
-	    }
 	    
 	    return accessories;
 	}

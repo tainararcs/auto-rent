@@ -30,52 +30,94 @@ public class FleetSB implements IFleet {
     private long totalMaintenance;
     private Map<Long, Long> availableByAgency;
 
+    /**
+     * Inicializa o bean carregando as métricas iniciais da frota.
+     */
     @PostConstruct
     public void init() {
         refresh();
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void refresh() {
-        totalVehicles = em.createQuery("SELECT COUNT(v) FROM Vehicle v", Long.class).getSingleResult();
-        totalAvailable = em.createQuery("SELECT COUNT(v) FROM Vehicle v WHERE v.status = :status", Long.class).setParameter("status", VehicleStatus.AVAILABLE).getSingleResult();
-        totalRented = em.createQuery("SELECT COUNT(v) FROM Vehicle v WHERE v.status = :status", Long.class).setParameter("status", VehicleStatus.RENTED).getSingleResult();
-        totalReserved = em.createQuery("SELECT COUNT(v) FROM Vehicle v WHERE v.status = :status", Long.class).setParameter("status", VehicleStatus.RESERVED).getSingleResult();
-        totalMaintenance = em.createQuery("SELECT COUNT(v) FROM Vehicle v WHERE v.status = :status", Long.class).setParameter("status", VehicleStatus.MAINTENANCE).getSingleResult();
+        totalVehicles = em.createQuery(
+        		"SELECT COUNT(v) FROM Vehicle v", 
+        		Long.class
+        ).getSingleResult();
+        totalAvailable = em.createQuery(
+        		"SELECT COUNT(v) FROM Vehicle v WHERE v.status = :status", 
+        		Long.class
+		).setParameter("status", VehicleStatus.AVAILABLE).getSingleResult();
+        totalRented = em.createQuery(
+        		"SELECT COUNT(v) FROM Vehicle v WHERE v.status = :status", 
+        		Long.class
+		).setParameter("status", VehicleStatus.RENTED).getSingleResult();
+        totalReserved = em.createQuery(
+        		"SELECT COUNT(v) FROM Vehicle v WHERE v.status = :status", 
+        		Long.class
+        ).setParameter("status", VehicleStatus.RESERVED).getSingleResult();
+        totalMaintenance = em.createQuery(
+        		"SELECT COUNT(v) FROM Vehicle v WHERE v.status = :status", 
+        		Long.class
+		).setParameter("status", VehicleStatus.MAINTENANCE).getSingleResult();
 
         // Carrega disponíveis por agência
         availableByAgency = new HashMap<>();
-        var results = em.createQuery("SELECT v.agency.id, COUNT(v) FROM Vehicle v WHERE v.status = :status GROUP BY v.agency.id", Object[].class).setParameter("status", VehicleStatus.AVAILABLE).getResultList();
+        var results = em.createQuery(
+        		"SELECT v.agency.id, COUNT(v) FROM Vehicle v WHERE v.status = :status GROUP BY v.agency.id", 
+        		Object[].class
+        ).setParameter("status", VehicleStatus.AVAILABLE).getResultList();
 
         for (Object[] row : results) 
             availableByAgency.put((Long) row[0], (Long) row[1]);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public long getTotalVehicles() { 
     	return totalVehicles; 
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public long getTotalAvailable() { 
     	return totalAvailable; 
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public long getTotalRented() { 
     	return totalRented; 
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public long getTotalReserved() { 
     	return totalReserved; 
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public long getTotalMaintenance() { 
     	return totalMaintenance; 
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Map<Long, Long> getAvailableByAgency() {
         if (availableByAgency == null) refresh();

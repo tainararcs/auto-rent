@@ -12,6 +12,9 @@ import trcs.autorent.enums.VehicleStatus;
 import trcs.autorent.model.Agency;
 import trcs.autorent.model.Vehicle;
 
+/**
+ * Implementação do Session Bean Stateless para a gestão de veículos da frota.
+ */
 @Stateless
 @Remote(IVehicle.class)
 public class VehicleSB implements IVehicle {
@@ -19,6 +22,9 @@ public class VehicleSB implements IVehicle {
 	@PersistenceContext(unitName = "autorent")
 	private EntityManager em;
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean create(Vehicle vehicle) {
 		if (vehicle == null) return false; 
@@ -26,6 +32,9 @@ public class VehicleSB implements IVehicle {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean update(Vehicle vehicle) {
 		if (vehicle == null) return false; 
@@ -33,6 +42,9 @@ public class VehicleSB implements IVehicle {
 		return true;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean remove(Long id) {
 		Vehicle vehicle = findById(id);
@@ -41,6 +53,9 @@ public class VehicleSB implements IVehicle {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Vehicle findById(Long id) {
 	    Vehicle vehicle = em.find(Vehicle.class, id);
@@ -52,6 +67,9 @@ public class VehicleSB implements IVehicle {
         return vehicle;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Vehicle> listAll() {
 		TypedQuery<Vehicle> query = em.createQuery("SELECT v FROM Vehicle v JOIN FETCH v.agency", Vehicle.class);
@@ -64,19 +82,23 @@ public class VehicleSB implements IVehicle {
 		return vehicles;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Vehicle> getByStatus(VehicleStatus status) {
 		TypedQuery<Vehicle> query = em.createQuery("SELECT v FROM Vehicle v JOIN FETCH v.agency WHERE v.status = :status", Vehicle.class);
 		query.setParameter("status", status);
 		List<Vehicle> vehicles = query.getResultList();
-		if (vehicles != null) {
-			for (Vehicle v : vehicles) {
+		if (vehicles != null) 
+			for (Vehicle v : vehicles) 
 				v.setAccessoriesList(null);
-			}
-		}
 		return vehicles;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Vehicle> getByAgency(Agency agency) {
 	    TypedQuery<Vehicle> query = em.createQuery("SELECT v FROM Vehicle v WHERE v.agency = :agency", Vehicle.class);
@@ -96,22 +118,26 @@ public class VehicleSB implements IVehicle {
 	    return vehicles;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public List<Vehicle> getByCategory(VehicleCategory category) { // Alterado para receber o Enum caso necessário, ou mantenha String
+	public List<Vehicle> getByCategory(VehicleCategory category) {
 		TypedQuery<Vehicle> query = em.createQuery("SELECT v FROM Vehicle v JOIN FETCH v.agency WHERE v.category = :category", Vehicle.class);
 		query.setParameter("category", category);
 		List<Vehicle> vehicles = query.getResultList();
-		if (vehicles != null) {
-			for (Vehicle v : vehicles) {
+		if (vehicles != null) 
+			for (Vehicle v : vehicles) 
 				v.setAccessoriesList(null);
-			}
-		}
+			
 		return vehicles;
 	}
 	
 	/**
-	 * @param agencyId
-	 * @return Lista com os veículos disponíveis em determinada agência.
+	 * Retorna a lista com os veículos disponíveis em determinada agência.
+	 * 
+	 * @param agencyId O ID da agência
+	 * @return Lista de veículos disponíveis
 	 */
 	public List<Vehicle> getAvailableVehiclesByAgency(Long agencyId) {
 		TypedQuery<Vehicle> query = em.createQuery("SELECT v FROM Vehicle v JOIN FETCH v.agency a WHERE a.id = :agencyId AND v.status = :status", Vehicle.class);
@@ -121,7 +147,9 @@ public class VehicleSB implements IVehicle {
 	}
 
 	/**
-	 * @return Lista com os veículos que estão alugados.
+	 * Retorna a lista com os veículos que estão atualmente alugados.
+	 * 
+	 * @return Lista de veículos alugados
 	 */
 	public List<Vehicle> getRentedVehicles() {
 		TypedQuery<Vehicle> query = em.createQuery("SELECT v FROM Vehicle v JOIN FETCH v.agency WHERE v.status = :status", Vehicle.class);
@@ -129,6 +157,9 @@ public class VehicleSB implements IVehicle {
 	    return query.getResultList();
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean updateStatus(Long vehicleId, VehicleStatus status) {
 	    Vehicle vehicle = em.find(Vehicle.class, vehicleId);
