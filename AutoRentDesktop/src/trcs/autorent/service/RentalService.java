@@ -13,15 +13,26 @@ import trcs.autorent.sessionbean.IRental;
 import trcs.autorent.sessionbean.IUser;
 import trcs.autorent.sessionbean.IVehicle; 
 
+/**
+ * Serviço de lógica de apresentação/cliente para a gestão de locações na consola.
+ */
 public class RentalService {
 
 	private IRental iRental;
 	
+	/**
+     * Construtor que efetua a busca (lookup) remota do EJB RentalSB.
+     */
     public RentalService() {
         // Faz o lookup do Session Bean Stateless de locações.
         iRental = new Lookup<IRental>().lookup("RentalSB", "IRental");
     }
 
+    /**
+     * Solicita os IDs necessários ao utilizador via consola para criar uma nova locação/reserva.
+     * 
+     * @return true se a locação for criada com sucesso, false caso contrário
+     */
     public boolean createRental() {
     	if (iRental == null) return false;
     	
@@ -49,6 +60,11 @@ public class RentalService {
 		return true;
     }
     
+    /**
+     * Lista todas as locações ativas na consola.
+     * 
+     * @return true se houver registos e forem exibidos, false caso contrário
+     */
     public boolean listActiveRentals() {
     	if (iRental == null) return false;
     	   
@@ -67,6 +83,11 @@ public class RentalService {
 		return true;
     }
 
+    /**
+     * Regista a retirada física de um veículo através do ID da locação na consola.
+     * 
+     * @return true se o registo for bem-sucedido, false caso contrário
+     */
     public boolean registerPickup() {
         if (iRental == null) return false;
         
@@ -80,6 +101,11 @@ public class RentalService {
         return true;
     }
 
+    /**
+     * Regista a devolução de um veículo através do ID da locação na consola.
+     * 
+     * @return true se o registo for bem-sucedido, false caso contrário
+     */
     public boolean registerReturn() {
     	if (iRental == null) return false;
         

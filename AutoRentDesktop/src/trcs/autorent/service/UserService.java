@@ -8,14 +8,26 @@ import trcs.autorent.enums.UserType;
 import trcs.autorent.model.User;
 import trcs.autorent.sessionbean.IUser;
 
+/**
+ * Serviço de lógica de apresentação/cliente para a entidade User na consola.
+ */
 public class UserService {
-	/** */
+	
 	private IUser iUser;
 	
+	/**
+     * Construtor que efetua a busca (lookup) remota do EJB UserSB.
+     */
 	public UserService() {
 		iUser = new Lookup<IUser>().lookup("UserSB", "IUser");
 	}
 	
+	/**
+	 * Executa o processo de login solicitando credenciais ao utilizador via consola, 
+	 * garantindo que apenas funcionários (EMPLOYEE) acedam ao sistema por esta via.
+	 * 
+	 * @return true se o login for efetuado com sucesso por um funcionário, false caso contrário
+	 */
 	public boolean login() {
         if (iUser == null) return false;
         
@@ -35,6 +47,11 @@ public class UserService {
         return true;
     }
 	
+	/**
+	 * Solicita os dados ao utilizador e cria um novo cliente na consola.
+	 * 
+	 * @return true se cadastrado com sucesso, false caso contrário
+	 */
     public boolean createUser() {
         if (iUser == null) return false;
         
@@ -53,6 +70,11 @@ public class UserService {
         return true;
     }
     
+    /**
+     * Lista todos os utilizadores do tipo cliente na consola.
+     * 
+     * @return true se listados com sucesso, false caso contrário
+     */
     public boolean listUsers() {
 		List<User> usersList = iUser.getByType(UserType.CLIENT);
 		if (usersList == null || usersList.isEmpty()) {

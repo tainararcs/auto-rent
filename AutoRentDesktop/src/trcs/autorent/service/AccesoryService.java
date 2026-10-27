@@ -7,14 +7,25 @@ import trcs.autorent.consts.Consts;
 import trcs.autorent.model.Accessory;
 import trcs.autorent.sessionbean.IAccessory;
 
+/**
+ * Serviço de lógica de apresentação/cliente para a entidade Accessory na consola.
+ */
 public class AccesoryService {
 	
 	private IAccessory iAccessory;
 	
+	/**
+     * Construtor que efetua a busca (lookup) remota do EJB AccessorySB.
+     */
     public AccesoryService() {
     	iAccessory = new Lookup<IAccessory>().lookup("AccessorySB", "IAccessory");
 	}
 
+    /**
+     * Solicita os dados ao utilizador via consola e cria um novo acessório.
+     * 
+     * @return true se o cadastro for efetuado com sucesso, false caso contrário
+     */
 	public boolean createAccesory() {
         if (iAccessory == null) return false;
         
@@ -26,6 +37,11 @@ public class AccesoryService {
         return true;
     }
     
+	/**
+	 * Lista todos os acessórios registados no sistema através da consola.
+	 * 
+	 * @return true se houver registos e forem exibidos, false caso contrário
+	 */
 	public boolean listAccesories() {
 		List<Accessory> accessoriesList = iAccessory.listAll();
 		if (accessoriesList == null || accessoriesList.isEmpty()) {

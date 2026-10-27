@@ -7,14 +7,25 @@ import trcs.autorent.consts.Consts;
 import trcs.autorent.model.Agency;
 import trcs.autorent.sessionbean.IAgency;
 
+/**
+ * Serviço de lógica de apresentação/cliente para a entidade Agency na consola.
+ */
 public class AgencyService {
 
 	private IAgency iAgency;
 	
+	/**
+     * Construtor que efetua a busca (lookup) remota do EJB AgencySB.
+     */
     public AgencyService() {
 		this.iAgency = new Lookup<IAgency>().lookup("AgencySB", "IAgency");
 	}
 
+    /**
+     * Solicita os dados ao utilizador e cria uma nova agência no sistema.
+     * 
+     * @return true se criada com sucesso, false caso contrário
+     */
 	public boolean createAgency() {
 		if (iAgency == null) return false;
        
@@ -33,6 +44,11 @@ public class AgencyService {
         return true;
     }
 	
+	/**
+	 * Lista todas as agências cadastradas na consola.
+	 * 
+	 * @return true se listadas com sucesso, false caso contrário
+	 */
 	public boolean listAgencies() {
 		List<Agency> agenciesList = iAgency.listAll();
 		if (agenciesList == null || agenciesList.isEmpty()) {
@@ -43,7 +59,7 @@ public class AgencyService {
 		InputOutput.writeTextArea(null);
 		InputOutput.writeTextArea("--- Agências Cadastradas ---\n\n");
 		for (Agency agency : agenciesList) 
-			InputOutput.writeTextArea(String.format("%s\n", agency));
+			InputOutput.writeTextArea(String.format("%s\n\n", agency));
 		
 		InputOutput.showTextArea(InputOutput.getTextArea(), Consts.LIST_AGENCIES);
 		return true;

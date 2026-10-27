@@ -11,16 +11,27 @@ import trcs.autorent.model.Vehicle;
 import trcs.autorent.sessionbean.IAgency;
 import trcs.autorent.sessionbean.IVehicle;
 
+/**
+ * Serviço de lógica de apresentação/cliente para a entidade Vehicle na consola.
+ */
 public class VehicleService {
 
 	private IVehicle iVehicle;
     private IAgency iAgency;
     
+    /**
+     * Construtor que efetua a busca (lookup) remota dos EJBs VehicleSB e AgencySB.
+     */
     public VehicleService() {
         iVehicle = new Lookup<IVehicle>().lookup("VehicleSB", "IVehicle");
         iAgency = new Lookup<IAgency>().lookup("AgencySB", "IAgency");
     }
     
+    /**
+     * Solicita os dados e insere um novo veículo na frota através da consola.
+     * 
+     * @return true se criado com sucesso, false caso contrário
+     */
     public boolean createVehicle() {
     	if (iVehicle == null || iAgency == null) return false;
         
@@ -47,7 +58,9 @@ public class VehicleService {
     }
 
     /**
-     * Lista toda a frota de veículos de uma determinada agência pelo ID da agência.
+     * Lista toda a frota de veículos de uma determinada agência através do ID da agência na consola.
+     * 
+     * @return true se listados com sucesso, false caso contrário
      */
     public boolean listVehiclesByAgency() {
     	long agencyId = Long.parseLong(InputOutput.readString("Digite o ID da agência:", Consts.LIST_VEHICLES_BY_AGENCY));
@@ -73,6 +86,11 @@ public class VehicleService {
 		return true;
     }
     
+    /**
+     * Atualiza o status operacional de um veículo específico na consola.
+     * 
+     * @return true após a alteração do status
+     */
     public boolean updateVehicleStatus() {
         if (iVehicle == null) return false;
         
