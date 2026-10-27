@@ -10,10 +10,10 @@ INSERT INTO agency (name, address, city, phonenumber) VALUES
 
 -- 2. Inserção de Usuários
 INSERT INTO users (name, cpf, email, passwordhash, type) VALUES
-('Carlos Gerente', '111.222.333-44', 'admin@autorent.com', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'EMPLOYEE'),
-('Ana Silva', '222.333.444-55', 'ana.silva@email.com', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'CLIENT'),
-('Bruno Souza', '333.444.555-66', 'bruno.souza@email.com', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'CLIENT'),
-('Mariana Costa', '444.555.666-77', 'mariana.costa@email.com', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'CLIENT');
+('Admin', '111.222.333-44', 'admin@autorent.com', '1508416', 'EMPLOYEE'),
+('Ana Silva', '222.333.444-55', 'ana@gmail.com', '1539200', 'CLIENT'),
+('Bruno Souza', '333.444.555-66', 'bruno@gmail.com', '1569984', 'CLIENT'),
+('Carla Costa', '444.555.666-77', 'carla@gmail.com', '1600768', 'CLIENT');
 
 -- 3. Inserção de Acessórios
 INSERT INTO accessory (description, dailyrate) VALUES
